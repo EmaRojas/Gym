@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "anj9B123DZMWr6Z2idhxqjyhiXp3L+hAlq7b+uAMCf62UdBjkMqMMPVxiKUrN61OlUmm/oJjsVXL64C3uOWd7w==",
+  "success": true,
+  "projectFilePath": "C:\\Trabajo\\Git-Ema\\ConsultorioGym\\DataBase\\DataBase.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\pepo_\\.nuget\\packages\\entityframework\\5.0.0\\entityframework.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

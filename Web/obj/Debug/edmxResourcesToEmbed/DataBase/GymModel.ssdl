@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GymModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Clientes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="255" />
+    <Property Name="Apellido" Type="nvarchar" MaxLength="255" />
+    <Property Name="Dni" Type="nvarchar" MaxLength="255" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
+    <Property Name="Telefono" Type="nvarchar" MaxLength="255" />
+    <Property Name="FechaNacimiento" Type="datetime" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="255" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="DeletedBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="RolId" Type="int" />
+  </EntityType>
+  <EntityType Name="FichaClientes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClienteId" Type="int" Nullable="false" />
+    <Property Name="Activo" Type="bit" />
+    <Property Name="Edad" Type="varchar" MaxLength="50" />
+    <Property Name="Altura" Type="varchar" MaxLength="50" />
+    <Property Name="Peso" Type="varchar" MaxLength="50" />
+    <Property Name="GrupoSanguineo" Type="varchar(max)" />
+    <Property Name="PColumna" Type="bit" />
+    <Property Name="DetalleColumna" Type="varchar(max)" />
+    <Property Name="ECardiaca" Type="bit" />
+    <Property Name="DetalleCardiaca" Type="varchar(max)" />
+    <Property Name="LRecientes" Type="bit" />
+    <Property Name="DetalleLesion" Type="varchar(max)" />
+    <Property Name="Deportes" Type="bit" />
+    <Property Name="DetalleDeporte" Type="varchar(max)" />
+    <Property Name="Observacion" Type="varchar(max)" />
+    <Property Name="ObjPersonal" Type="varchar(max)" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="CreateDate" Type="varchar" MaxLength="50" />
+    <Property Name="DeleteDate" Type="varchar" MaxLength="50" />
+    <Property Name="UpdateDate" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ForgotPasswords">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Token" Type="uniqueidentifier" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
+    <Property Name="UsuarioId" Type="int" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="255" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="DeletedBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="DeletedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="255" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="255" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="DeletedBy" Type="nvarchar" MaxLength="255" />
+    <Property Name="DeletedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="NombreCompleto" Type="varchar" MaxLength="100" />
+    <Property Name="Pass" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK2F1E8CDBD521F71A">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+    <End Role="Clientes" Type="Self.Clientes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Clientes">
+        <PropertyRef Name="RolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GymModelStoreContainer">
+    <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FichaClientes" EntityType="Self.FichaClientes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ForgotPasswords" EntityType="Self.ForgotPasswords" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK2F1E8CDBD521F71A" Association="Self.FK2F1E8CDBD521F71A">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Clientes" EntitySet="Clientes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
