@@ -1,0 +1,53 @@
+﻿@model App.Web.Models.AbonoPorClienteModel
+@Html.HiddenFor(x => x.FechaIngreso)
+<script src="~/Scripts/Proyecto/AbonoPorCliente.js"></script>
+<div class="row" style="padding:30px">
+    <form class="formValidate" id="formValidate" method="get" action="">
+
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <label class="active">Cliente*</label>
+                @Html.DropDownList("ClienteId", Model.ListaCliente, new { name = "itemCliente", @class = "select-dropdown", required = true, style = "width: 100%;" })
+                <div class="errorTxt1"></div>
+            </div>
+            <div class="input-field col s12 m6">
+                <label class="active">Abono*</label>
+                @Html.DropDownList("AbonoId", Model.ListaAbono, new { name = "itemAbono", @class = "select-dropdown", required = true, style = "width: 100%;", data_error= ".errorTxt2" })
+                <div class="errorTxt2"></div>
+            </div>
+            <div class="input-field col s12 m6">
+                <label for="precio">Precio*</label>
+                <input value="@Model.Precio" id="Precio" name="precio" onkeyup="RemplaceComa()" type="text" data-error=".errorTxt3">
+                <div class="errorTxt3"></div>
+            </div>
+            <div class="input-field col s12 m6">
+                <label for="fechanacimiento">Fecha Vencimiento*</label>
+                <input value="@Model.FechaVencimiento" id="fechaVencimiento" type="text" name="fechaVencimiento" placeholder="00/00/0000" data-error=".errorTxt4">
+                <div class="errorTxt4"></div>
+            </div>
+            <div class="input-field col s12 m12" style="margin-left: -10px; padding-top:10px">
+                <input type="checkbox" value="@Model.Pagado" id="ckPagado" />
+                <label for="ckPagado">Pagado?</label>
+            </div>
+            <div class="right" style="padding-top:40px">
+                <a href="@Url.Action("List")" class="btn btn waves-effect waves-light deep-purple darken-2" name="action">
+                    Volver
+                </a>
+                <button class="btn btn waves-effect waves-light deep-purple darken-2" value="guardar" type="submit" name="guardar">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        if ('@Model.Pagado' == "True") {
+            $('#ckPagado').prop("checked", true);
+        }
+        else {
+            $('#ckPagado').prop("checked", false);
+        }     
+    });
+</script>

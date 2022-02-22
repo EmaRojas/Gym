@@ -1,0 +1,118 @@
+﻿@model App.Web.Models.FichaModel
+
+<div class="row" style="padding:30px">
+    <form class="" id="formFicha" method="get" action="">
+        <input hidden id="clienteId" />
+        <input hidden id="fichaId" />
+        <div class="row">
+            <div class="input-field col s12 m5">
+                <label id="lnombre" for="nombre">Cliente</label>
+                <input disabled value="@Model.NombreCompleto" id="cliente" name="nombrecompleto" type="text" data-error=".errorTxt1">
+                <div class="errorTxt1"></div>
+            </div>
+            <div class="input-field col s12 m5">
+                <label id="lnombre" for="nombre">Teléfono</label>
+                <input disabled value="@Model.Telefono" id="telefono" name="telefono" type="text" data-error=".errorTxt1">
+                <div class="errorTxt1"></div>
+            </div>
+            <div class="input-field col s12 m2">
+                <label id="lnombre" for="nombre">Edad</label>
+                <input disabled value="@Model.Edad" id="edad" name="edad" type="text" data-error=".errorTxt1">
+                <div class="errorTxt1"></div>
+            </div>
+            <div class="input-field col s12 m2">
+                <label id="lnombre" for="nombre">Altura</label>
+                <input id="altura" value="@Model.Altura" name="altura" type="number" data-error=".errorTxt1">
+                <div class="errorTxt1"></div>
+            </div>
+            <div class="input-field col s12 m2">
+                <label id="lnombre" for="nombre">Peso</label>
+                <input id="peso" value="@Model.Peso" name="peso" type="number" data-error=".errorTxt1">
+                <div class="errorTxt1"></div>
+            </div>
+            <div class="input-field col s12 m3">
+                <label id="lnombre" for="nombre">Grupo Sanguineo</label>
+                <input id="sangre" value="@Model.GrupoSanguineo" name="gruposanguineo" type="text" data-error=".errorTxt1">
+                <div class="errorTxt1"></div>
+            </div>
+            <div class="input-field col s12 m5">
+                <label id="lnombre" for="nombre">Médico de Cabecera</label>
+                <input id="medico" value="@Model.Medico" name="medico" type="text" data-error=".errorTxt1">
+                <div class="errorTxt1"></div>
+            </div>
+            <div class="input-field col s12 m4" style="margin-left: -10px; padding-top:10px">
+                <input type="checkbox" value="@Model.PColumna" id="ckColumna" />
+                <label for="ckColumna">Tiene problemas de columna?</label>
+            </div>
+
+            <div class="input-field col s12 m8">
+                <textarea id="obColumna" rows="1" name="detallecolumna" class="materialize-textarea">@Model.DetalleColumna</textarea>
+                <label for="obColumna">Detalle</label>
+            </div>
+
+            <div class="input-field col s12 m4" style="margin-left: -10px; padding-top:10px">
+                <input type="checkbox" id="ckCardiaca" name="ecardiaca" value="@Model.ECardiaca" />
+                <label for="ckCardiaca">Enfermedad Cardíaca?</label>
+            </div>
+
+            <div class="input-field col s12 m8">
+                <textarea id="obCardiaca" rows="1" name="detallecardiaca" class="materialize-textarea">@Model.DetalleCardiaca</textarea>
+                <label for="obCardiaca">Detalle</label>
+            </div>
+
+            <div class="input-field col s12 m4" style="margin-left: -10px; padding-top:10px">
+                <input type="checkbox" id="cklesion" name="lrecientes" value="@Model.LRecientes" />
+                <label for="cklesion">Lesión Reciente?</label>
+            </div>
+
+            <div class="input-field col s12 m8">
+                <textarea id="obLesion" rows="1" name="detallelesion" class="materialize-textarea">@Model.DetalleLesion</textarea>
+                <label for="obLesion">Detalle</label>
+            </div>
+
+            <div class="input-field col s12 m12">
+                <textarea id="objPersonal" rows="1" name="objpersonal" class="materialize-textarea">@Model.ObjPersonal</textarea>
+                <label for="objPersonal">Objetivo Personal</label>
+            </div>
+            <div class="input-field col s12 m12">
+                <textarea id="observacion" rows="1" name="observacion" class="materialize-textarea">@Model.Observacion</textarea>
+                <label for="observacion">Observación</label>
+            </div>
+            <div class="right" style="padding-top:40px">
+                <button class="btn btn waves-effect waves-light deep-purple darken-2" type="submit" name="action">
+                    Guardar
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        if ('@Model.PColumna' == "True") {
+            $('#ckColumna').prop("checked", true);
+            $('#obColumna').prop("disabled", false);
+        }
+        else {
+            $('#ckColumna').prop("checked", false);
+            $('#obColumna').prop("disabled", true);
+        }
+        if ('@Model.ECardiaca' == "True") {
+            $('#ckCardiaca').prop("checked", true);
+            $('#obCardiaca').prop("disabled", false);
+        }
+        else {
+            $('#ckCardiaca').prop("checked", false);
+            $('#obCardiaca').prop("disabled", true);
+        }
+           if ('@Model.LRecientes' == "True") {
+               $('#cklesion').prop("checked", true);
+               $('#obLesion').prop("disabled", false);
+        }
+        else {
+               $('#cklesion').prop("checked", false);
+               $('#obLesion').prop("disabled", true);
+        }
+    });
+</script>

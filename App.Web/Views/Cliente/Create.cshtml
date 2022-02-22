@@ -1,0 +1,12 @@
+﻿@model App.Web.Models.ClienteModel
+
+@using (Html.BeginForm("Create", "Cliente", FormMethod.Post, new { id = "formValidate" }))
+{
+
+    <center>
+        <h2>Nuevo Cliente</h2>
+    </center>
+    <hr style="background-color: #5e35b1; height: 2px">
+    @Html.Partial("_CreateOrEdit")
+
+}

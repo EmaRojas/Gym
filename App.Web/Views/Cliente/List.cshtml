@@ -1,0 +1,78 @@
+﻿@model IEnumerable<App.Web.Models.ClienteModel>
+
+@{
+    ViewBag.Title = "List";
+}
+<script src="~/Scripts/Proyecto/Cliente.js"></script>
+<center>
+    <h2>Clientes</h2>
+</center>
+<hr style="background-color:#7e57c2; height:2px">
+
+<div class="row" style="padding-top:2%">
+    <div class="col-lg-12 col-md-12">
+
+        <table id="table-sortable-server" data-url="@Url.Action("Table","Cliente")">
+            <thead>
+                <tr>
+                    <th data-field="state" data-checkbox="true">#</th>
+                    <th data-field="Nombre" data-align="center">
+                        Nombre
+                    </th>
+                    <th data-field="Apellido" data-align="center">
+                        Apellido
+                    </th>
+                    <th data-field="Dni" data-align="center">
+                        D.N.I.
+                    </th>
+                    <th data-field="Telefono" data-align="center">
+                        Teléfono
+                    </th>
+                    @*<th data-field="Email" data-align="center">
+                            Email
+                        </th>
+                        <th data-field="FechaNacimiento" data-align="center">
+                            Fecha de nacimiento
+                        </th>*@
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div id="table-toolbar" class="form-group">
+    <a href="@Url.Action("Create")" id="new" data-bind="click: createClient" class="btn btn-raised btn-primary btn-rounded">Nuevo</a>
+    <a id="edit" data-bind="click: editClient" onclick="Editar()" hidden disabled class="btn btn-raised btn-success btn-rounded">Editar</a>
+    <a id="ficha" data-bind="click: fichaClient" onclick="Ficha()" hidden disabled class="btn btn-raised btn-warning btn-rounded">Ficha</a>
+    <a id="abono" data-bind="click: abonoClient" onclick="Abono()" hidden disabled class="btn btn-raised btn-warning btn-rounded">Abonos</a>
+    <a id="delete" data-bind="click: deleteClient" onclick="confirmDelete('', '', '', '')" hidden class="btn btn-raised btn-danger btn-rounded">Eliminar</a>
+</div>
+<script>
+    $('#table-sortable-server').on('check.bs.table uncheck.bs.table ' + 'check-all.bs.table uncheck-all.bs.table', function () {
+        $('#edit').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
+        $('#ficha').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
+        $('#delete').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
+        $('#abono').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
+
+    });
+
+    $('#eventsTable').on('check.bs.table', function (e, row) {
+        checkedRows.push({ id: row.id, name: row.name, forks: row.forks });
+        console.log(checkedRows);
+    });
+
+    function Editar(parameters) {
+        var id = parseInt($('#table-sortable-server').bootstrapTable('getSelections')[0].Id);
+        window.location.href = "/Alumno/Edit?id=" + encodeURIComponent(id);
+    }
+
+    function Ficha(parameters) {
+        var id = parseInt($('#table-sortable-server').bootstrapTable('getSelections')[0].Id);
+        window.location.href = "/Ficha/Create?id=" + encodeURIComponent(id);
+    }
+
+    function Abono(parameters) {
+        var id = parseInt($('#table-sortable-server').bootstrapTable('getSelections')[0].Id);
+        window.location.href = "/AbonoPorAlumno/List?id=" + encodeURIComponent(id);
+    }
+</script>
+

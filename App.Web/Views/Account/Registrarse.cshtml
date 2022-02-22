@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "/Views/Shared/_LayoutLogin.cshtml";
+}
+@model nXs.Web.Models.Usuarios.UsuarioModel
+
+<div class="table-struct full-width full-height">
+    <div class="table-cell vertical-align-middle">
+        <div class="auth-form  ml-auto mr-auto no-float">
+            <div class="panel panel-default card-view mb-0">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="panel-title txt-dark">Registro</h6>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="form-wrap">
+                                    <form action="../Account/Registrarse" method="post" data-toggle="validator" id="formRegistrarse">
+                                        <div class="form-group">
+                                            <label class="control-label mb-10" for="exampleInputuname_2">Usuario</label>
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.User, new { @class = "form-control capitalize", @required = "required", @placeholder = "Usuario", @style = "text-transform:capitalize" })
+
+                                                <div class="input-group-addon"><i class="icon-user"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-10" for="exampleInputEmail_2">Email</label>
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @required = "required", @placeholder = "Ingrese Email", type="email" })
+                                                <div class="input-group-addon"><i class="icon-envelope-open"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-10" for="exampleInputEmail_2">Nombre Completo</label>
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.NombreCompleto, new { @class = "form-control capitalize", @required = "required", @placeholder = "Ingrese Nombre Completo", @style = "text-transform:capitalize" })
+                                                <div class="input-group-addon"><i class="icon-user"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-10" for="exampleInputEmail_2">Nombre Empresa</label>
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.Empresa, new { @class = "form-control capitalize", @required = "required", @placeholder = "Ingrese Nombre Empresa", @style = "text-transform:capitalize" })
+                                                <div class="input-group-addon"><i class="icon-home"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-10" for="exampleInputpwd_2">Contraseña</label>
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @required = "required", type = "password", id = "password", @placeholder = "Ingrese Contraseña", })
+                                                <div class="input-group-addon"><i class="icon-lock"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label mb-10" for="exampleInputpwd_3">Confirmar Contraseña</label>
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.RepPassword, new { @placeholder = "Confirme Contraseña", @class = "form-control", @data_match = "#password", @data_match_error = "Las contraseñas no coinciden", type = "password", id = "rePassword", required = "required" })
+                                                <div class="input-group-addon"><i class="icon-lock"></i></div>
+                                            </div>
+                                            <div class="help-block with-errors"></div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success btn-block">Crear</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

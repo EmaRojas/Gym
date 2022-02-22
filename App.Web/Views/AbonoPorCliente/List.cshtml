@@ -1,0 +1,78 @@
+﻿@model IEnumerable<App.Web.Models.AbonoPorClienteModel>
+<script src="~/Scripts/Proyecto/AbonoPorCliente.js"></script>
+<div class="col s12 m12 l12" id="listAbonoCliente">
+
+    <div class="card-panel">
+        <h4 class="header2 center-align">Abonos Asignados</h4>
+        <div class="divider deep-purple lighten-2"></div>
+        <div class="row" style="padding:30px">
+            <div class="col s12 m12 l12">
+                <table id="example" class="responsive-table display" data-page-length='25' cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            @*<th>D.N.I.</th>*@
+                            <th>Abono</th>
+                            <th>Precio</th>
+                            <th>Ingreso</th>
+                            <th>Vencimiento</th>
+                            <th>Pagado?</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblAbonoCliente">
+                    </tbody>
+                </table>
+                <div class="right" style="padding-top:40px">
+                    <a href="@Url.Action("Create")" class="btn waves-effect waves-light deep-purple darken-2" name="action">Nuevo</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        //Lista();
+
+        $('#example').DataTable({
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ Registros",
+                "zeroRecords": "Sin resultados encontrados",
+                "info": "Mostrando _PAGE_ of _PAGES_ Entradas",
+                "infoEmpty": "Mostrando _PAGE_ de _PAGES_",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            "bServerSide": true, //make server side processing to true
+            "sAjaxSource": '/AbonoPorCliente/ListaAbonosAsignados', //url of the Ajax source,i.e. web api method
+            "sAjaxDataProp": "aaData", // data property of the returned ajax which contains table data
+            "bProcessing": true,
+            "bLengthChange": false,
+            "sPaginationType": "full_numbers",//pagination type
+            "aoColumns": [
+                { "mData": 'Cliente' },
+                { "mData": 'Abono' },
+                { "mData": 'Precio' },
+                { "mData": 'FechaIngreso' },
+                { "mData": 'FechaVencimiento' },
+                { "mData": 'Pagado' },
+                { "mData": 'Estado' },
+                { "mData": 'Opciones' }
+                ]
+        });
+    });
+</script>
+
+

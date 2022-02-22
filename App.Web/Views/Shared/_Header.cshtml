@@ -1,0 +1,191 @@
+﻿@using App.Services
+<script src="~/Content/scripts/mobile-detect.min.js"></script>
+
+<nav class="navbar-1" id="WebId" hidden>
+    <ul class="nav nav-inline navbar-left">
+        <li class="nav-item">
+            <a class="nav-link toggle-layout" href="#">
+                <i class="material-icons menu">menu</i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle-fullscreen" href="#" data-toggle="tooltip" data-placement="bottom" title="Pantalla completa">
+                <i class="material-icons">fullscreen</i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle" title="Clientes" href="@Url.Action("List","Alumno")" data-toggle="tooltip" data-placement="bottom">
+                <i class="material-icons">
+                    group
+                </i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle" title="Actividades" href="@Url.Action("List","Actividad")" data-toggle="tooltip" data-placement="bottom">
+                <i class="material-icons">
+                    fitness_center
+                </i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle" title="Abonos" href="@Url.Action("List","Abono")" data-toggle="tooltip" data-placement="bottom">
+                <i class="material-icons">
+                    chat
+                </i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle" title="Caja" href="@Url.Action("List","Caja")" data-toggle="tooltip" data-placement="bottom">
+                <i class="material-icons">
+                    attach_money
+                </i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle" title="Panel turnos" href="@Url.Action("Panel", "TurnoPorAsignacion")" data-toggle="tooltip" data-placement="bottom">
+                <i class="material-icons">insert_invitation</i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle" title="Fichaje" href="@Url.Action("Fichaje", "Home")" data-toggle="tooltip" data-placement="bottom">
+                <i class="material-icons">query_builder</i>
+            </a>
+        </li>
+    </ul>
+    <span class="welcome">@UserData.FullName</span>
+
+
+    <div class="dropdown user-dropdown">
+        <a class="dropdown-toggle no-after" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="badge badge-40">
+                @*<span class="tag tag-sm tag-rounded tag-primary">1</span>*@
+                <img style="background-color: white" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCo3JjSfJjrXREp0A4AiBN5yFKGoS0VyygjA&usqp=CAU" class="max-w-40 img-circle" alt="badge" />
+            </div>
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-right from-right">
+            @*<a href="@Url.Action("IndexGym", "Home", new { role="User"})" class="dropdown-item">
+                <i class="material-icons icon">people_outline</i>
+                <span class="title">Usuarios</span>
+            </a>
+
+
+
+            <a href="@Url.Action("IndexGym", "Home",new { role="Admin" })" class="dropdown-item">
+                <i class="material-icons icon">person</i>
+                <span class="title">Administrador</span>
+            </a>*@
+
+            <a class="dropdown-item" href="@Url.Action("Logout","Account")">
+                <i class="material-icons icon">power_settings_new</i>
+                <span class="title">Logout</span>
+            </a>
+        </div>
+
+
+
+    </div>
+</nav>
+
+<nav class="navbar-1" id="PhoneId" hidden>
+    <ul class="nav nav-inline navbar-left">
+        <li class="nav-item">
+            <a class="nav-link toggle-layout" href="#">
+                <i class="material-icons menu">menu</i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle-fullscreen" href="#">
+                <i class="material-icons">fullscreen</i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle" title="Clientes" href="@Url.Action("List","Alumno")">
+                <i class="material-icons">
+                    group
+                </i>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link toggle" title="Abonos" href="@Url.Action("List","Caja")">
+                <i class="material-icons">
+                    attach_money
+                </i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle" title="Panel Turnos" href="@Url.Action("Panel", "TurnoPorAsignacion")">
+                <i class="material-icons">insert_invitation</i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link toggle" title="Fichaje" href="@Url.Action("Fichaje", "Home")">
+                <i class="material-icons">query_builder</i>
+            </a>
+        </li>
+    </ul>
+    <span class="welcome">@UserData.FullName</span>
+    <div class="dropdown user-dropdown">
+        <a class="dropdown-toggle no-after" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="badge badge-40">
+                @*<span class="tag tag-sm tag-rounded tag-primary">1</span>*@
+                <img style="background-color: white" src="https://www.imerir.com/wp-content/uploads/2017/02/ios7-contact_icon-icons.com_50286.png" class="max-w-40 img-circle" alt="badge" />
+            </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right from-right">
+            <a class="dropdown-item" href="@Url.Action("CodigoQR","Home")">
+                <i class="material-icons icon">arrow_back</i>
+                <span class="title">Salir</span>
+            </a>
+            <a class="dropdown-item" href="@Url.Action("Logout","Account")">
+                <i class="material-icons icon">power_settings_new</i>
+                <span class="title">Logout</span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="jumbotron-1">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid">
+
+            <button id="backButton" type="button" onclick="Back()" class="btn btn-warning bmd-btn-fab" data-toggle="dropdown">
+                <i class="fa fa-arrow-circle-left"></i>
+                <div class="ripple-container"></div>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="left-sidebar-backdrop"></div>
+<div class="right-sidebar-backdrop"></div>
+
+
+<script>
+    var url = window.location.href
+
+    function Back() {
+        window.location = "/" + url.split("/")[3] + "/List";
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    function validarDevice() {
+        var md = new MobileDetect(window.navigator.userAgent);
+        if (md.phone()) {
+            $("#PhoneId").removeAttr("hidden", false)
+        }
+        else {
+            $("#WebId").removeAttr("hidden", false)
+
+        }
+    }
+
+
+    validarDevice();
+</script>

@@ -1,0 +1,311 @@
+﻿@using App.Services
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Gimnasio</title>
+    <meta name="description" content="dashboard, admin, template, templates, peak, peak ui, material design">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/roboto.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/material-icons.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/flag-icon-css.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/weather-icons.css" />
+    <link href="~/Content/css/font.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+    <link href="~/Content/css/Loader.css" rel="stylesheet" />
+
+    <!-- build:css css/styles.css -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/main.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/global.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/navbars/navbar-1.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/layouts/default-sidebar-1.css">
+    <link href="~/Content/css/layouts/default-sidebar-2.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/jumbotron/jumbotron-1.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/ui/buttons.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/left-sidebars/left-sidebar-1.css">
+    <link href="~/Content/css/helpers/other.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/helpers/margin.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/helpers/padding.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/helpers/text.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/helpers/border.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/helpers/height.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/helpers/width.css">
+    <link href="~/Content/table/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/Content/css/Select2.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/extras/mousetrap.css">
+    @*<link href="~/Content/css/gijgo.min.css" rel="stylesheet" />*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.10/combined/css/gijgo.min.css" rel="stylesheet" />
+    <style>
+        .gj-textbox-md {
+            height: 34px;
+        }
+
+        .fa-plus {
+            padding-top: 7px !important;
+        }
+    </style>
+
+</head>
+
+<body class="animated fadeIn" id="ui-toastr" data-layout="default-sidebar-2" data-sidebar="primary" data-navbar="primary" data-controller="ui" data-view="toastr" style="text-transform: uppercase;">
+    <script src="~/Content/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/blockUI/jquery.blockUI.js"></script>
+    <script>
+
+        function Bloquear() {
+            $.blockUI(
+                {
+                    overlayCSS: { backgroundColor: '#7e57c2', opacity: '0.' },
+                    css: { border: 'none' },
+                    message: '<div class="spinner"><div class= "ball"></div><p>CARGANDO...</p></div>'
+                });
+        }
+
+        function Desbloquear() {
+            $.unblockUI();
+        }
+    </script>
+    @Html.Partial("_Header")
+    <div class="container-fluid">
+        <div class="row">
+            <div class="left-sidebar-1">
+                <div class="wrapper">
+                    <div class="content">
+                        <div class="logo">
+                            <a href="#" class="text">
+                                <span> @UserData.CompanyName</span>
+                            </a>
+
+                        </div>
+
+                        <!--<div class="sidebar-heading">-->
+                        @*<div class="sidebar-image">
+                                <img src="../../../../assets/faces/w2.png" class="img-circle img-fluid" alt="sidebar-image">
+                            </div>*@
+                        <!--<div class="sidebar-options">
+                                <div>
+                                    <h3 style="text-transform: uppercase;">@UserData.FullName</h3>
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="left-sidebar-section" style="height: 100%">
+                            <ul class="list-unstyled" id="navigation">
+
+                                <li>
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("Index", "Dashboard")">
+                                        <span class="btn-title">Inicio</span>
+                                        <i class="material-icons pull-left icon">home</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("List", "Alumno")">
+                                        <span class="btn-title">Alumno</span>
+                                        <i class="material-icons pull-left icon">person</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("List", "Actividad")">
+                                        <span class="btn-title">Actividad</span>
+                                        <i class="material-icons">directions_run</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("List", "Abono")">
+                                        <span class="btn-title">Abono</span>
+                                        <i class="material-icons">speaker_notes</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("List", "AbonoPorAlumno")">
+                                        <span class="btn-title">Asignación</span>
+                                        <i class="material-icons">folder</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#theme-components" data-target="#caja" aria-expanded="false">
+                                        <span class="btn-title">Caja</span>
+                                        <i class="material-icons">arrow_drop_down</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                    <div class="collapse" id="caja" style="height: 0px;" aria-expanded="false">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a href="@Url.Action("List", "Caja")" class="btn btn-flat">
+                                                    <span class="btn-title">Movimientos Caja</span>
+
+                                                    <i class="material-icons">compare_arrows</i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("ConsultaCaja", "Caja")" class="btn btn-flat">
+                                                    <span class="btn-title">Consulta de Movimientos</span>
+
+                                                    <i class="material-icons">search</i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("HistorialCaja", "Caja")" class="btn btn-flat">
+                                                    <span class="btn-title">Historial Caja</span>
+                                                    <i class="material-icons">unarchive</i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("List", "Condicion")" class="btn btn-flat">
+                                                    <span class="btn-title">Condición</span>
+                                                    <i class="material-icons">description</i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#theme-components" data-target="#reporte" aria-expanded="false">
+                                        <span class="btn-title">REPORTES</span>
+                                        <i class="material-icons">arrow_drop_down</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                    <div class="collapse" id="reporte" style="height: 0px;" aria-expanded="false">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a class="btn btn-flat collapsed" href="@Url.Action("Index", "Reporte")">
+                                                    <span class="btn-title">Alumnos a recuperar</span>
+                                                    <i class="material-icons pull-left icon">description</i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn btn-flat collapsed" href="@Url.Action("Index", "Cumpleaños")">
+                                                    <span class="btn-title">Cumpleaños</span>
+                                                    <i class="material-icons pull-left icon">cake</i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#theme-components" data-target="#grafico" aria-expanded="false">
+                                        <span class="btn-title">Graficos</span>
+                                        <i class="material-icons">arrow_drop_down</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                    <div class="collapse" id="grafico" style="height: 0px;" aria-expanded="false">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a href="@Url.Action("FiltroGrafico","Grafico")" class="btn btn-flat">
+                                                    <i class="material-icons">pie_chart</i>
+                                                    <span class="btn-title">Actividad por Mes</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("GraficoCantAbono","Grafico")" class="btn btn-flat">
+                                                    <i class="material-icons">insert_chart</i>
+                                                    <span class="btn-title">Cantidad de Abonos</span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("Panel", "TurnoPorAsignacion")">
+                                        <span class="btn-title">Panel Turnos</span>
+                                        <i class="material-icons">insert_invitation</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("Fichaje", "Home")">
+                                        <span class="btn-title">Fichaje</span>
+                                        <i class="material-icons">query_builder</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 main">
+                <div class="page-on-top">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            @Html.Partial("_DeleteConfimation")
+                            @RenderBody()
+                            @Html.Partial("_Notifications")
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <script src="~/Content/bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="~/Content/components/scripts/modernizr.js"></script>
+    <script src="~/Content/bower_components/tether/dist/js/tether.js"></script>
+    <script src="~/Content/bower_components/jquery-storage-api/jquery.storageapi.min.js"></script>
+    <script src="~/Content/bower_components/moment/moment.js"></script>
+    <script src="~/Content/bower_components/d3/d3.js"></script>
+    <script src="~/Content/bower_components/mousetrap/mousetrap.js"></script>
+    <script src="~/Content/bower_components/bootstrap-material-design/dist/bootstrap-material-design.iife.js"></script>
+    <script src="~/Content/bower_components/toastr/toastr.min.js"></script>
+    <script src="~/Content/bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="~/Content/bower_components/jquery-fullscreen/jquery.fullscreen-min.js"></script>
+    <script src="~/Content/scripts/functions.js"></script>
+    <script src="~/Content/scripts/app.js"></script>
+    <script src="~/Content/scripts/navbar-1.js"></script>
+    <script src="~/Content/table/bootstrap-table.js"></script>
+    <script src="~/Content/table/bootstrap-table-es-AR.js"></script>
+    <script src="~/Content/jquery.validate-form.js"></script>
+    <script src="~/Content/scripts/textfield.js"></script>
+    <script src="~/Content/scripts/Select2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.10/combined/js/gijgo.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $(".select-with-search").select2({
+                theme: "bootstrap",
+            });
+
+            $("#table-sortable-server").bootstrapTable({
+                pagination: true,
+                sidePagination: 'server',
+                search: true,
+                clickToSelect: true,
+                singleSelect: true,
+                pageSize: 10,
+                toolbar: "#table-toolbar",
+                showToggle: true,
+                showColumns: true,
+                trimOnSearch: false
+            });
+
+            $("#boostrap-table-simple").bootstrapTable({
+                pagination: true,
+                search: true,
+                clickToSelect: true,
+                singleSelect: true,
+                pageSize: 10,
+                toolbar: "#table-toolbar",
+                trimOnSearch: false
+            });
+        });
+        function RemplaceComa() {
+            if (event.keyCode == 188) {
+                event.preventDefault();
+                event.target.value = event.target.value.replace(",", ".");;
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+﻿<script type="text/javascript">
+    function confirmDelete(Id, Name, Option, Accion, Mensaje) {
+        debugger
+        if (Id != null || Id != 0) {
+            $("#confirm").openModal();
+
+        }
+
+        if (Accion != undefined && Accion != "") {
+            $("#AccionDelete").html("Delete");
+        }
+        if (Mensaje != undefined && Mensaje != "") {
+            $("#MensajeDelete").html(Mensaje);
+        }
+        $(".modal-body").val(Id);
+        var removeBtn = $('#btnYes');
+        removeBtn.attr('href', Option + 'Delete/' + Id);
+
+        $("#name").text(Name);
+    }
+</script>
+
+<div id="confirm" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-default-damodal-default-primary-label">Eliminar</h3>
+        </div>
+        <div class="modal-body">
+            <p style="color: black">
+                Está seguro/a de que desea eliminar ?
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="waves-effect waves-red btn-flat modal-action modal-close">Disagree</a>
+        <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Agree</a>
+        <a class="waves-effect waves-green btn-flat modal-action" id="btnYes">Sí</a>
+        <a class="waves-effect waves-green btn-flat modal-action modal-close" data-dismiss="modal">No</a>
+
+    </div>
+</div>
+
+@*<div class="modal modal-primary fade scale in" id="confirm" tabindex="-1" role="document" aria-labelledby="modal-default-primary" aria-hidden="true">
+    <div class="modal-dialog modal-default" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #0d47a1; color:white">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color:white">×</span>
+                </button>
+                <h3 class="modal-title" id="modal-default-damodal-default-primary-label">Eliminar</h3>
+            </div>
+            <div class="modal-body">
+                <p style="color: black">
+                    Está seguro/a de que desea eliminar ?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-raised btn-success btn-flat" id="btnYes">Sí</a>
+                <a class="btn btn-raised btn-primary btn-flat" data-dismiss="modal">No</a>
+
+            </div>
+        </div>
+
+    </div>
+</div>*@
+

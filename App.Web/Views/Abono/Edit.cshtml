@@ -1,0 +1,16 @@
+﻿@model App.Web.Models.AbonoModel
+
+@using (Html.BeginForm("Edit", "Abono", FormMethod.Post, new { id = "formValidate" }))
+{
+    @Html.Hidden("Id", Model.Id)
+
+    <div class="col s12 m12 l6">
+        <div class="card-panel" style="margin:0px!important">
+            <h4 class="header2 center-align">Editar Abono</h4>
+            <div class="divider deep-purple lighten-2"></div>
+
+            @Html.Partial("_CreateOrEdit")
+
+        </div>
+    </div>
+}

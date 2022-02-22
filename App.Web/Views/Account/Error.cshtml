@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Acceso denegado";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+
+<div class="form-group">
+    <div class="text-center">
+        <div class="alert alert-danger" role="alert">
+            <h1><i class="fa fa-times" aria-hidden="true"></i> Acceso denegado</h1>
+            <h5>Usted no posee permisos para ingresar a esta pagina</h5>
+        </div>
+        <a href="@Url.Action("Logout", "Account")" class="btn btn-link">Salir</a>
+    </div>
+</div>

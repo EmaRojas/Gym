@@ -1,0 +1,79 @@
+﻿@model nXs.Web.Models.Usuarios.UsuarioModel
+
+<form class="auto-approve" id="formRegistrarse">
+<div class="overbox" style="padding-right: 7%;">
+    <div class="material-button alt-2"><span class="shape"></span></div>
+    <div class="title">Registrarse</div>
+
+    <div class="col-md-6 col-xs-6">
+        <div class="input">
+            <label for="regUser">Usuario</label>
+            @Html.TextBoxFor(x => x.User,new { required = "required", @class ="form-control", id="regUser"})
+            <span class="spin"></span>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-xs-6">
+        <div class="input">
+            <label for="regemail">Email</label>
+            @Html.TextBoxFor(x => x.Email, new { required = "required", @class = "form-control", id = "regemail" })
+            <span class="spin"></span>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-xs-6">
+        <div class="input">
+            <label for="regFullName">Nombre Completo</label>
+            @Html.TextBoxFor(x => x.FullName,new { required = "required", @class ="form-control", id= "regFullName" })
+            <span class="spin"></span>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="input">
+            <label for="regnamegym">Nombre Gimnasio</label>
+            @Html.DropDownListFor(model => Model.ActividadId, Model.ActividadLista, new { @class = "form-control pmd-select2 select-with-search", style = "width: 100%;" })
+            <span class="spin"></span>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="input">
+            <label for="regpass">Contraseña</label>
+            @Html.TextBoxFor(x => x.Password,new {type = "password", required = "required", @class ="form-control", id= "regpass" })
+            <span class="spin"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="input">
+            <label for="reregpass">Repetir Contraseña</label>
+            @Html.TextBoxFor(x => x.RepPassword, new {type = "password", required = "required", @class = "form-control", id = "reregpass" })
+            <span class="spin"></span>
+        </div>
+    </div>
+    <div class="button">
+        <button onclick="Form2()" type="button"><span>CREAR</span></button>
+    </div>
+</div>
+</form>
+<script>
+    $( document ).ready(function() {
+        $("#formLogin").validate({
+            submitHandler: function (form) {
+                $.ajax({
+                    url: '@Url.Action("Registrarse")',
+                    type: "POST",
+                    data: $("#formRegistrarse").serialize(),
+                    success: function (result) {
+                        alert("Okey");
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                        alert("Error");
+                    }
+                });
+            }
+        });
+    });
+
+</script>

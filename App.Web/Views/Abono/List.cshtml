@@ -1,0 +1,74 @@
+﻿@model IEnumerable<App.Web.Models.AbonoModel>
+
+@{
+    ViewBag.Title = "List";
+}
+<div class="col s12 m12 l12" id="listAbono">
+    <div class="card-panel">
+        <h4 class="header2 center-align">Abonos</h4>
+        <div class="divider deep-purple lighten-2"></div>
+        <div class="row" style="padding:30px">
+            <div class="col s12 m12 l12">
+                <table id="data-table-simple" class="responsive-table display" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblAbono">
+                    </tbody>
+                </table>
+                <div class="right" style="padding-top:40px">
+                    <a href="@Url.Action("Create")" class="btn waves-effect waves-light deep-purple darken-2" name="action">Nuevo</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            processing: true, // for show progress bar
+            serverSide: true, // for process server side
+            filter: true, // this is for disable filter (search box)
+            orderMulti: false, // for disable multiple column at once
+            url: "/Abono/Lista",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var html = '';
+                $.each(result, function (key, item) {
+                    html += '<tr>';
+                    html += '<td>' + item.Nombre + '</td>';
+                    html += '<td>' + item.Precio + '</td>';
+                    html += '<td class="center">';
+                    html += '<a style="margin-right: 10px;" class="btn-floating waves-effect waves-light teal" title="Editar" onclick = "Editar(' + item.Id + ')" id="' + item.Id + '"><i class="mdi-editor-border-color"></i></a>';
+                    html += '<a class="btn-floating waves-effect waves-light red" title="Eliminar" onclick="Eliminar(' + item.Id + ')" id="' + item.Id + '"><i class="mdi-action-delete"></i></a>';
+                    html += '</td>';
+                    html += '</tr>';
+                });
+                $('#tblAbono').html(html);
+
+            }
+        });
+
+
+
+    });
+
+    function Editar(id) {
+        window.location.href = "/Abono/Edit?id=" + encodeURIComponent(id);
+
+    }
+
+    function Eliminar(id) {
+        window.location.href = "/Abono/Delete?id=" + encodeURIComponent(id);
+
+    }
+</script>
