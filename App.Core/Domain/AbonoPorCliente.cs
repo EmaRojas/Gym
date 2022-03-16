@@ -25,5 +25,7 @@ namespace App.Core.Domain
 
         public virtual Pago Pago { get; set; }
 
+        public virtual string PendientePego { get; set; }
+
     }
 }

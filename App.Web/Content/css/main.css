@@ -8556,7 +8556,7 @@ button:focus {
     .btn-group-raised .btn.btn-warning:hover,
     .btn-group-raised .btn-warning.custom-file-control:hover::before {
         color: #fff;
-        background-color: #eb9300;
+        background-color: #4527a0;
         border-color: #c27a00;
     }
 
@@ -8566,7 +8566,7 @@ button:focus {
     .btn-group-raised .btn.btn-warning.focus,
     .btn-group-raised .btn-warning.focus.custom-file-control::before {
         color: #fff;
-        background-color: #eb9300;
+        background-color: #4527a0;
         border-color: #c27a00;
     }
 
@@ -8584,7 +8584,7 @@ button:focus {
     .open >
     .btn-group-raised .btn-warning.dropdown-toggle.custom-file-control::before {
         color: #fff;
-        background-color: #eb9300;
+        background-color: #4527a0;
         border-color: #c27a00;
     }
 
@@ -8626,7 +8626,7 @@ button:focus {
         .open >
         .btn-group-raised .btn-warning.dropdown-toggle.focus.custom-file-control::before {
             color: #fff;
-            background-color: #eb9300;
+            background-color: #4527a0;
             border-color: #805000;
         }
 
@@ -8640,7 +8640,7 @@ button:focus {
             .open > .btn.bmd-btn-fab.btn-warning.dropdown-toggle.bmd-btn-icon:hover, .open > .bmd-btn-fab.btn-warning.dropdown-toggle.bmd-btn-icon.custom-file-control:hover::before, .open > .btn.btn-raised.btn-warning.dropdown-toggle.bmd-btn-icon:hover, .open > .btn-raised.btn-warning.dropdown-toggle.bmd-btn-icon.custom-file-control:hover::before, .open >
             .btn-group-raised .btn.btn-warning.dropdown-toggle.bmd-btn-icon:hover, .open >
             .btn-group-raised .btn-warning.dropdown-toggle.bmd-btn-icon.custom-file-control:hover::before {
-                background-color: #eb9300;
+                background-color: #4527a0;
             }
 
     .btn.bmd-btn-fab.btn-warning.disabled:focus, .bmd-btn-fab.btn-warning.disabled.custom-file-control:focus::before, .btn.bmd-btn-fab.btn-warning.disabled.focus, .bmd-btn-fab.btn-warning.disabled.focus.custom-file-control::before, .btn.bmd-btn-fab.btn-warning:disabled:focus, .bmd-btn-fab.btn-warning.custom-file-control:disabled:focus::before, .btn.bmd-btn-fab.btn-warning:disabled.focus, .bmd-btn-fab.btn-warning.custom-file-control:disabled.focus::before, .btn.btn-raised.btn-warning.disabled:focus, .btn-raised.btn-warning.disabled.custom-file-control:focus::before, .btn.btn-raised.btn-warning.disabled.focus, .btn-raised.btn-warning.disabled.focus.custom-file-control::before, .btn.btn-raised.btn-warning:disabled:focus, .btn-raised.btn-warning.custom-file-control:disabled:focus::before, .btn.btn-raised.btn-warning:disabled.focus, .btn-raised.btn-warning.custom-file-control:disabled.focus::before,

@@ -1,57 +1,57 @@
 ﻿@model App.Web.Models.AbonoModel
-
-<div class="row" style="padding:30px">
-    <form class="formValidate" id="formValidate" method="get" action="">
-        <div class="row">
-            <div class="input-field col s12 m6">
-                <label for="Nombre">Nombre*</label>
-                <input value="@Model.Nombre" id="nombre" name="nombre" type="text" data-error=".errorTxt1">
-                <div class="errorTxt1"></div>
-            </div>
-            <div class="input-field col s12 m6">
-                <label for="precio">Precio*</label>
-                <input value="@Model.Precio" id="precio" name="precio" onkeyup="RemplaceComa()" type="number" data-error=".errorTxt2">
-                <div class="errorTxt2"></div>
-            </div>
-          
-            <div class="right" style="padding-top:40px">
-                <button class="btn btn waves-effect waves-light deep-purple darken-2" value="guardar" type="submit" name="guardar">
-                    Guardar
-                </button>
-            </div>
-        </div>
-    </form>
+<div class="row m-b-20">
+    <div class="form-group bmd-form-group col-md-4">
+        <label class="bmd-label-static">Nombre *</label>
+        @Html.TextBoxFor(model => model.Nombre, new { autofocus = "autofocus", @class = "form-control", required = "required", style = "width: 100%;" })
+    </div>
+    <div class="form-group bmd-form-group col-md-4">
+        <label class="bmd-label-static">Precio *</label>
+        @Html.TextBoxFor(model => model.Precio, new { autofocus = "autofocus", @class = "form-control", required = "required", style = "width: 100%;" })
+    </div>
 </div>
 
+<div class="form-group pull-right">
+    <button class="btn btn-primary" value="guardar" type="submit" name="guardar">
+        Guardar
+    </button>
+</div>
+@*<div class="row" style="padding:30px">
+        <form class="formValidate" id="formValidate" method="get" action="">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <label for="Nombre">Nombre*</label>
+                    <input value="@Model.Nombre" id="nombre" name="nombre" type="text" data-error=".errorTxt1">
+                    <div class="errorTxt1"></div>
+                </div>
+                <div class="input-field col s12 m6">
+                    <label for="precio">Precio*</label>
+                    <input value="@Model.Precio" id="precio" name="precio" onkeyup="RemplaceComa()" type="number" data-error=".errorTxt2">
+                    <div class="errorTxt2"></div>
+                </div>
+
+                <div class="right" style="padding-top:40px">
+                    <button class="btn btn waves-effect waves-light deep-purple darken-2" value="guardar" type="submit" name="guardar">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>*@
+
 <script>
-    $("#formValidate").validate({
-        rules: {
-            nombre: {
-                required: true,
-            },
-            precio: {
-                required: true,
-                number: true
+    $(document).ready(function () {
+        $("#formValidate").validate({
+            rules: {
+                Nombre: {
+                    required: true,
+                },
+                Precio: {
+                    required: true,
+                    number: true
+                }
             }
-        },
-        messages: {
-            nombre: {
-                required: "Requerido",
-            },
-            precio: {
-                required: "Requerido",
-                number: "Solo numeros"
-            },
-        },
-        errorElement: 'div',
-        errorPlacement: function (error, element) {
-            var placement = $(element).data('error');
-            if (placement) {
-                $(placement).append(error)
-            } else {
-                error.insertAfter(element);
-            }
-        },
+        });
     });
+
 
 </script>

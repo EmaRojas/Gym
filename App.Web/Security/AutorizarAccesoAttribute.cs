@@ -11,8 +11,14 @@ namespace App.Web.Security
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            return !string.IsNullOrEmpty(UserData.FullName);
+            var fechaVencimiento = DateTime.Parse(UserData.ExpirationDate);
 
+            return fechaVencimiento.Date >= DateTime.UtcNow.AddHours(-3).Date;
+        }
+
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            filterContext.Result = new RedirectResult("/Suscripcion/Planes");
         }
     }
 

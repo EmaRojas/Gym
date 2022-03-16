@@ -1,19 +1,16 @@
-﻿
-@{
-    ViewBag.Title = "Login";
+﻿@{ 
     Layout = null;
 }
+@model App.Web.Models.UsuarioModel
 
 <!DOCTYPE html>
 <html lang="en">
-
 <!--================================================================================
     Item Name: Materialize - Material Design Admin Template
-    Version: 3.0
+    Version: 1.0
     Author: GeeksLabs
     Author URL: http://www.themeforest.net/user/geekslabs
 ================================================================================ -->
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
@@ -21,10 +18,8 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
     <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-    <title>Login Page | Materialize - Material Design Admin Template</title>
-
+    <title>Login | Gimnasio</title>
     <!-- Favicons-->
-    <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
     <!-- Favicons-->
     <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
     <!-- For iPhone -->
@@ -32,123 +27,255 @@
     <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
     <!-- For Windows Phone -->
     <!-- CORE CSS-->
-
-    <link href="~/Content/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="~/Content/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- Custome CSS-->
-    <link href="~/Content/css/custom/custom-style.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="~/Content/css/layouts/page-center.css" type="text/css" rel="stylesheet" media="screen,projection">
-
-    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-    <link href="~/Content/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="~/Content/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
-
-    <!-- Default theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    <link href="~/Content/login/materialize.css" rel="stylesheet" />
+    <link href="~/Content/login/style.css" rel="stylesheet" />
+    <link href="~/Content/login/page-center.css" rel="stylesheet" />
+    <link href="~/Content/login/prism.css" rel="stylesheet" />
+    <link href="~/Content/login/IconsLogin.css" rel="stylesheet" />
+    <link href="~/Content/bower_components/toastr/toastr.css" rel="stylesheet" />
 </head>
-
-<body class="deep-purple lighten-1">
-    <!-- Start Page Loading -->
-    <div id="loader-wrapper">
-        <div id="loader"></div>
-        <div class="loader-section section-left"></div>
-        <div class="loader-section section-right"></div>
-    </div>
-    <!-- End Page Loading -->
-
-
+<body style="background-color: #5e35b1">
+    <script src="~/Content/jquery-3.1.1.js"></script>
 
     <div id="login-page" class="row">
-        <div class="col s12 z-depth-4 card-panel">
-            <form class="login-form">
-                <div class="row">
-                    <div class="input-field col s12 center">
-                        <p class="center login-form-text">Bienvenido</p>
-                    </div>
+
+        <div class="col s12 z-depth-4 card-panel" style="padding: 10px">
+
+            <form class="login-form" id="formLogin">
+                <div style="padding-left: 262px; position: absolute">
+                    <a class="btn-floating deep-purple darken-1 btn-large waves-effect waves-light" onclick="AddCuenta()"><i class="mdi-social-person-add"></i></a>
                 </div>
                 <div class="row margin">
                     <div class="input-field col s12">
                         <i class="mdi-social-person-outline prefix"></i>
-                        <input id="username" type="text">
-                        <label class="center-align">Usuario</label>
+                        @Html.TextBoxFor(x => x.User, new { type = "text", id = "username1", required = "required" })
+                        <label for="username" class="center-align">Usuario *</label>
                     </div>
                 </div>
                 <div class="row margin">
                     <div class="input-field col s12">
                         <i class="mdi-action-lock-outline prefix"></i>
-                        <input id="password" type="password">
-                        <label for="password">Contraseña</label>
+                        @Html.TextBoxFor(x => x.Password, new { type = "password", id = "password1", required = "required" })
+                        <label for="password">Contraseña *</label>
+                    </div>
+                </div>
+                @*<div class="row">
+                        <div class="input-field col s12 m12 l12  login-text">
+                            <input type="checkbox" id="remember-me" />
+                            <label for="remember-me">Recordarme</label>
+                        </div>
+                    </div>*@
+                <div class="row">
+                    <div class="input-field col s12">
+                        <button type="submit" class="btn deep-purple darken-1 waves-effect waves-light col s12">Ingresar</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m12 l12">
+                        <p class="margin center-align medium-small">
+                            <a href="@Url.Action("ForgotPassword")">Olvido su contraseña ?</a>
+                        </p>
+                    </div>
+                </div>
+            </form>
+
+            <form class="login-form" style="width: 310px" id="formRegistrarse" hidden="hidden">
+                <div style="padding-left: 289px; position: absolute">
+                    <a class="btn-floating deep-purple darken-1 btn-large waves-effect waves-light " onclick="Login()"><i class="mdi-content-undo"></i></a>
+                </div>
+                <div class="row margin">
+                    <div class="input-field col s12">
+                        @Html.TextBoxFor(x => x.User, new { type = "text", id = "username", required = "required" })
+                        <label for="username" class="center-align">Usuario *</label>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.TextBoxFor(x => x.Email, new { type = "email", id = "email", required = "required" })
+                        <label for="email" class="center-align">Email *</label>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.TextBoxFor(x => x.FullName, new { type = "text", id = "fullName", required = "required" })
+                        <label for="fullName" class="center-align">Nombre Completo *</label>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.TextBoxFor(x => x.Empresa, new { type = "text", id = "empresa", required = "required" })
+                        <label for="empresa" class="center-align">Nombre Empresa *</label>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.TextBoxFor(x => x.Password, new { type = "password", id = "password" })
+                        <label for="password" class="center-align">Contraseña *</label>
+                    </div>
+                    <div class="input-field col s12">
+                        @Html.TextBoxFor(x => x.RepPassword, new { type = "password", id = "rePassword", required = "required" })
+                        <label for="rePassword" class="center-align">Confirmar Contraseña *</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <a id="submitButton" class="btn waves-effect deep-purple darken-1 col s12">Login</a>
+                        <button type="submit" class="btn deep-purple darken-1 waves-effect waves-light col s12">Crear</button>
                     </div>
                 </div>
             </form>
+
         </div>
+
+
+        <script>
+        function AddCuenta() {
+            $("#formLogin").hide();
+            $("#formRegistrarse").show();
+
+        }
+
+        function Login() {
+            $("#formLogin").show();
+            $("#formRegistrarse").hide();
+        }
+
+    $( document ).ready(function() {
+        $("#formLogin").validate({
+            submitHandler: function (form) {
+                $.ajax({
+                    url: '@Url.Action("Login")',
+                    type: "POST",
+                    data: $("#formLogin").serialize(),
+                    success: function (data) {
+                        if (data.Success) {
+                            toastr["success"](data.Message, "Notificación:");
+
+                            toastr.options = {
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": false,
+                                "positionClass": "toast-top-right",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "timeOut": "5000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            }
+                            setTimeout(function () {
+                                window.location.href = data.Url;
+                                },3000);
+
+
+                            } else {
+                            toastr["error"](data.Message, "Notificación:");
+
+                            toastr.options = {
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": false,
+                                "positionClass": "toast-top-right",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "timeOut": "5000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            }
+
+                            }
+                        },
+                        error: function (result) {
+                            alert("Error inesperado");
+                        }
+                    });
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $("#formRegistrarse").validate({
+                rules: {
+                    Password: "required",
+                    RepPassword: {
+                        equalTo: "#password"
+                    }
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                    url: '@Url.Action("Registrarse")',
+                    type: "POST",
+                    data: $("#formRegistrarse").serialize(),
+                    success: function (data) {
+                       if (data.Success) {
+                            toastr["success"](data.Message, "Notificación:");
+
+                            toastr.options = {
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": false,
+                                "positionClass": "toast-top-right",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "timeOut": "5000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            }
+                            setTimeout(function() {
+                                window.location.href = data.Url;
+                                },3000);
+
+
+                            } else {
+                            toastr["error"](data.Message, "Notificación:");
+
+                            toastr.options = {
+                                "closeButton": true,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": false,
+                                "positionClass": "toast-top-right",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": "300",
+                                "hideDuration": "1000",
+                                "timeOut": "5000",
+                                "extendedTimeOut": "1000",
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            }
+
+                            }
+                    },
+                    error: function (xhr) {
+                        alert("Error");
+                    }
+                });
+                }
+        });
+    });
+        </script>
     </div>
-
-
 
     <!-- ================================================
       Scripts
       ================================================ -->
     <!-- jQuery Library -->
-    <script type="text/javascript" src="~/Content/js/plugins/jquery-1.11.2.min.js"></script>
-    <!--materialize js-->
-    <script type="text/javascript" src="~/Content/js/materialize.js"></script>
-    <!--prism-->
-    <script type="text/javascript" src="~/Content/js/plugins/prism/prism.js"></script>
-    <!--scrollbar-->
-    <script type="text/javascript" src="~/Content/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script type="text/javascript" src="~/Content/js/plugins.js"></script>
-    <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="~/Content/js/custom-script.js"></script>
-
-    <!-- JavaScript -->
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-
-
-    <script>
-        $("#submitButton").click(function (e) {// Porque es on('submit') ???
-            var empObj = {
-                User: $("#username").val(),
-                Password: $("#password").val()
-            };
-
-            $.ajax({
-                processing: true, // for show progress bar
-                serverSide: true, // for process server side
-                filter: true, // this is for disable filter (search box)
-                orderMulti: false, // for disable multiple column at once
-                url: "/Account/Login",
-                type: "POST",
-                data: JSON.stringify(empObj),
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    if (result.Success) {
-                        alertify.success(result.Message);
-
-                        setTimeout(function () {
-                            window.location = result.Url;
-                        }, 2000);
-                    }
-                    else {
-                        alertify.error(result.Message);
-                    }
-
-                }
-            });
-
-        });
-    </script>
+    <script src="~/Content/login/materialize.js"></script>
+    <script src="~/Content/login/plugins.js"></script>
+    <script src="~/Content/login/prism.js"></script>
+    <script src="~/Content/jquery.validate.js"></script>
+    <script src="~/Content/bower_components/toastr/toastr.min.js"></script>
 
 </body>
-
 </html>
-

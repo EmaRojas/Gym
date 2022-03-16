@@ -1,6 +1,7 @@
 ﻿using App.Core.Domain;
 using App.Services.Generals;
 using App.Web.Models;
+using App.Web.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,19 @@ using System.Web.Mvc;
 
 namespace App.Web.Controllers
 {
+    [AutorizarAcceso]
+
     public class FichaController : BaseController
     {
         private IGeneralService<Cliente> _serviceCliente { get; set; }
         private IGeneralService<FichaCliente> _serviceFicha{ get; set; }
+        private IGeneralService<Log> _logService { get; set; }
 
-        public FichaController(IGeneralService<Cliente> serviceCliente, IGeneralService<FichaCliente> serviceFicha)
+        public FichaController(IGeneralService<Cliente> serviceCliente, IGeneralService<FichaCliente> serviceFicha, IGeneralService<Log> logService)
         {
             _serviceCliente = serviceCliente;
             _serviceFicha = serviceFicha;
+            _logService = logService;
         }
         // GET: Ficha
         public ActionResult Index()
@@ -25,48 +30,61 @@ namespace App.Web.Controllers
             return View();
         }
 
+        public ActionResult List()
+        {
+            return RedirectToAction("List", "Cliente");
+        }
+
         [HttpGet]
         public ActionResult Create(int id)
         {
-            var cliente = _serviceCliente.GetByIdByUser(id);
-            var ficha = _serviceFicha.GetByCriteriaByUser(x => x.Cliente.Id == id).FirstOrDefault();
-            var model = new FichaModel();
+            try
+            {
+                var cliente = _serviceCliente.GetByIdByUser(id);
+                var ficha = _serviceFicha.GetByCriteriaByUser(x => x.Cliente.Id == id).FirstOrDefault();
+                var model = new FichaModel();
 
-            if (ficha != null)
-            {
-                model = new FichaModel()
+                if (ficha != null)
                 {
-                    Id = ficha.Id,
-                    NombreCompleto = String.Format("{0} {1}", cliente.Nombre, cliente.Apellido),
-                    Telefono = cliente.Telefono,
-                    ClienteId = cliente.Id,
-                    Edad = CalcularEdad(cliente.FechaNacimiento),
-                    Altura = ficha.Altura,
-                    Peso = ficha.Peso,
-                    GrupoSanguineo = ficha.GrupoSanguineo,
-                    Medico = ficha.Medico,
-                    PColumna = ficha.PColumna,
-                    DetalleColumna = ficha.DetalleColumna,
-                    ECardiaca = ficha.ECardiaca,
-                    DetalleCardiaca = ficha.DetalleCardiaca,
-                    LRecientes = ficha.LRecientes,
-                    DetalleLesion = ficha.DetalleLesion,
-                    ObjPersonal = ficha.ObjPersonal,
-                    Observacion = ficha.Observacion,
-                };
-            }
-            else
-            {
-                model = new FichaModel()
+                    model = new FichaModel()
+                    {
+                        Id = ficha.Id,
+                        NombreCompleto = String.Format("{0} {1}", cliente.Nombre, cliente.Apellido),
+                        Telefono = cliente.Telefono,
+                        ClienteId = cliente.Id,
+                        Edad = CalcularEdad(cliente.FechaNacimiento),
+                        Altura = ficha.Altura,
+                        Peso = ficha.Peso,
+                        GrupoSanguineo = ficha.GrupoSanguineo,
+                        Medico = ficha.Medico,
+                        PColumna = ficha.PColumna,
+                        DetalleColumna = ficha.DetalleColumna,
+                        ECardiaca = ficha.ECardiaca,
+                        DetalleCardiaca = ficha.DetalleCardiaca,
+                        LRecientes = ficha.LRecientes,
+                        DetalleLesion = ficha.DetalleLesion,
+                        ObjPersonal = ficha.ObjPersonal,
+                        Observacion = ficha.Observacion,
+                    };
+                }
+                else
                 {
-                    NombreCompleto = String.Format("{0} {1}", cliente.Nombre, cliente.Apellido),
-                    Telefono = cliente.Telefono,
-                    ClienteId = cliente.Id,
-                    Edad = CalcularEdad(cliente.FechaNacimiento)
-                };
+                    model = new FichaModel()
+                    {
+                        NombreCompleto = String.Format("{0} {1}", cliente.Nombre, cliente.Apellido),
+                        Telefono = cliente.Telefono,
+                        ClienteId = cliente.Id,
+                        Edad = CalcularEdad(cliente.FechaNacimiento)
+                    };
+                }
+
+                return View(model);
             }
-    
-            return View(model);
+            catch (Exception ex)
+            {
+                _logService.Create(new Log { Action = "Ficha/Create", Message = ex.Message, Created = DateTime.UtcNow.AddHours(-3) });
+                throw;
+            }
             //return Json(new { ficha = model, View = View(model) }, JsonRequestBehavior.AllowGet);
 
         }
@@ -129,9 +147,12 @@ namespace App.Web.Controllers
 
         public string CalcularEdad(string nacimiento)
         {
-            var fechaN = DateTime.Parse(nacimiento);
+            var fechaN = DateTime.ParseExact(nacimiento, "dd/MM/yyyy",null);
+            _logService.Create(new Log { Action = "Ficha/CalcularEdad", Message = fechaN.ToString(), Created = DateTime.UtcNow.AddHours(-3) });
 
-            int edad = DateTime.Today.AddTicks(-fechaN.Ticks).Year - 1;
+            int edad = DateTime.UtcNow.AddHours(-3).AddTicks(-fechaN.Ticks).Year - 1;
+            _logService.Create(new Log { Action = "Ficha/CalcularEdad", Message = DateTime.UtcNow.AddHours(-3).ToString(), Created = DateTime.UtcNow.AddHours(-3) });
+
 
             return edad.ToString();
         }

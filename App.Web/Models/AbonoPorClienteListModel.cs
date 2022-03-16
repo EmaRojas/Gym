@@ -29,6 +29,7 @@ namespace App.Web.Models
         public bool Vencido { get; set; }
 
         public string Estado { get; set; }
+        public string PendientePago { get; set; }
 
         public string Opciones { get; set; }
 

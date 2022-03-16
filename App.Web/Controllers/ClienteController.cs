@@ -2,6 +2,7 @@
 using App.Services;
 using App.Services.Generals;
 using App.Web.Models;
+using App.Web.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,20 @@ using System.Web.Mvc;
 
 namespace App.Web.Controllers
 {
+    [AutorizarAcceso]
+
     public class ClienteController : BaseController
     {
         private readonly IGeneralService<Cliente> _clienteService;
         private readonly IGeneralService<AbonoPorCliente> _abonoPorClienteService;
+        private readonly IGeneralService<CentroSalud> _centroSaludService;
         // GET: Cliente
 
-        public ClienteController(IGeneralService<Cliente> clienteService, IGeneralService<AbonoPorCliente> abonoPorClienteService)
+        public ClienteController(IGeneralService<Cliente> clienteService, IGeneralService<AbonoPorCliente> abonoPorClienteService, IGeneralService<CentroSalud> centroSaludService = null)
         {
             _clienteService = clienteService;
             _abonoPorClienteService = abonoPorClienteService;
+            _centroSaludService = centroSaludService;
         }
         public ActionResult Index()
         {
@@ -60,6 +65,7 @@ namespace App.Web.Controllers
                     Telefono = item.Telefono?.ToString() ?? "",
                     Email = item.Email,
                     FechaNacimiento = item.FechaNacimiento,
+                    CentoSalud = item.CentroSalud?.Nombre
                 });
             }
 
@@ -73,28 +79,39 @@ namespace App.Web.Controllers
 
             var cliente = new ClienteModel();
 
+            cliente.ListaCentros.Add(new SelectListItem() { Text = "Seleccione...", Value = "default" });
+
+            foreach (var centro in _centroSaludService.GetAllByUser().OrderBy(x => x.Nombre))
+            {
+                cliente.ListaCentros.Add(new SelectListItem() { Text = centro.Nombre, Value = centro.Id.ToString() });
+            }
+
             return View(cliente);
         }
 
         [HttpPost]
         public ActionResult Create(ClienteModel model, string guardar)
         {
+            var centro = _centroSaludService.GetByIdByUser(model.CentroId);
+
+            var cliente = new Cliente()
+            {
+                Nombre = model.Nombre,
+                Apellido = model.Apellido,
+                Direccion = model.Direccion,
+                Dni = model.Dni,
+                Telefono = model.Telefono,
+                Email = model.Email,
+                FechaNacimiento = model.FechaNacimiento,
+                CentroSalud = centro ?? null
+            };
+
             switch (guardar)
             {
                 case "guardar":
                     var existe = _clienteService.GetByCriteria(x => x.Dni == model.Dni);
                     if (existe.Count == 0)
                     {
-                        var cliente = new Cliente()
-                        {
-                            Nombre = model.Nombre,
-                            Apellido = model.Apellido,
-                            Direccion = model.Direccion,
-                            Dni = model.Dni,
-                            Telefono = model.Telefono,
-                            Email = model.Email,
-                            FechaNacimiento = model.FechaNacimiento,
-                        };
 
                         cliente.CreatedDate = DateTime.UtcNow.Date;
                         _clienteService.Create(cliente);
@@ -112,16 +129,6 @@ namespace App.Web.Controllers
                     existe = _clienteService.GetByCriteria(x => x.Dni == model.Dni);
                     if (existe.Count == 0)
                     {
-                        var cliente = new Cliente()
-                        {
-                            Nombre = model.Nombre,
-                            Apellido = model.Apellido,
-                            Direccion = model.Direccion,
-                            Dni = model.Dni,
-                            Telefono = model.Telefono,
-                            Email = model.Email,
-                            FechaNacimiento = model.FechaNacimiento
-                        };
                         _clienteService.Create(cliente);
                         SuccessNotification("Guardado Correctamente");
                         return RedirectToAction("Create", "AbonoPorCliente", new { clienteId = cliente.Id });
@@ -152,7 +159,15 @@ namespace App.Web.Controllers
                 Telefono = cliente.Telefono,
                 Email = cliente.Email,
                 FechaNacimiento = cliente.FechaNacimiento,
+                CentroId = cliente.CentroSalud == null ? 0 : cliente.CentroSalud.Id
             };
+
+            model.ListaCentros.Add(new SelectListItem() { Text = "Seleccione...", Value = "default" });
+
+            foreach (var centro in _centroSaludService.GetAllByUser().OrderBy(x => x.Nombre))
+            {
+                model.ListaCentros.Add(new SelectListItem() { Text = centro.Nombre, Value = centro.Id.ToString() });
+            }
 
             return View(model);
         }
@@ -162,6 +177,7 @@ namespace App.Web.Controllers
         {
             var existe = _clienteService.GetByCriteria(x => x.Dni == model.Dni && x.Id != model.Id);
             var cliente = _clienteService.GetByIdByUser(model.Id);
+            var centro = _centroSaludService.GetByIdByUser(model.CentroId);
 
 
             if (existe.Count == 0)
@@ -174,6 +190,7 @@ namespace App.Web.Controllers
                 cliente.Telefono = model.Telefono;
                 cliente.Email = model.Email;
                 cliente.FechaNacimiento = model.FechaNacimiento;
+                cliente.CentroSalud = centro ?? null;
 
                 _clienteService.Update(cliente);
 
@@ -209,7 +226,7 @@ namespace App.Web.Controllers
                     TieneAbono = _abonoPorClienteService.GetByCriteriaByUser(x => x.Cliente.Id == item.Id).Any()
                 });
             }
-            
+
 
             return Json(clientesModel, JsonRequestBehavior.AllowGet);
         }

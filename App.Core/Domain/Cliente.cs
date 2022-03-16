@@ -22,6 +22,7 @@ namespace App.Core.Domain
         public virtual string Email { get; set; }
 
         public virtual string FechaNacimiento { get; set; }
+        public virtual CentroSalud CentroSalud { get; set; }
 
     }
 }

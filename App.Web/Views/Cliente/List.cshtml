@@ -28,12 +28,15 @@
                     <th data-field="Telefono" data-align="center">
                         Teléfono
                     </th>
+                    <th data-field="CentoSalud" data-align="center">
+                        Centro Salud
+                    </th>
                     @*<th data-field="Email" data-align="center">
-                            Email
-                        </th>
-                        <th data-field="FechaNacimiento" data-align="center">
-                            Fecha de nacimiento
-                        </th>*@
+            Email
+        </th>
+        <th data-field="FechaNacimiento" data-align="center">
+            Fecha de nacimiento
+        </th>*@
                 </tr>
             </thead>
         </table>
@@ -62,7 +65,7 @@
 
     function Editar(parameters) {
         var id = parseInt($('#table-sortable-server').bootstrapTable('getSelections')[0].Id);
-        window.location.href = "/Alumno/Edit?id=" + encodeURIComponent(id);
+        window.location.href = "/Cliente/Edit?id=" + encodeURIComponent(id);
     }
 
     function Ficha(parameters) {
@@ -72,7 +75,7 @@
 
     function Abono(parameters) {
         var id = parseInt($('#table-sortable-server').bootstrapTable('getSelections')[0].Id);
-        window.location.href = "/AbonoPorAlumno/List?id=" + encodeURIComponent(id);
+        window.location.href = "/AbonoPorCliente/List?id=" + encodeURIComponent(id);
     }
 </script>
 

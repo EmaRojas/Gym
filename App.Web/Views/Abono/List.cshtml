@@ -3,72 +3,51 @@
 @{
     ViewBag.Title = "List";
 }
-<div class="col s12 m12 l12" id="listAbono">
-    <div class="card-panel">
-        <h4 class="header2 center-align">Abonos</h4>
-        <div class="divider deep-purple lighten-2"></div>
-        <div class="row" style="padding:30px">
-            <div class="col s12 m12 l12">
-                <table id="data-table-simple" class="responsive-table display" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tblAbono">
-                    </tbody>
-                </table>
-                <div class="right" style="padding-top:40px">
-                    <a href="@Url.Action("Create")" class="btn waves-effect waves-light deep-purple darken-2" name="action">Nuevo</a>
-                </div>
+<center>
+    <h2>Abonos</h2>
+</center>
+<hr style="background-color:#7e57c2; height:2px">
 
-            </div>
-        </div>
+<div class="row" style="padding-top:2%">
+    <div class="col-lg-12 col-md-12">
 
+        <table id="table-sortable-server" data-url="@Url.Action("Table","Abono")">
+            <thead>
+                <tr>
+                    <th data-field="state" data-checkbox="true">#</th>
+                    <th data-field="Nombre" data-align="center">
+                        Nombre
+                    </th>
+                    <th data-field="Precio" data-align="center">
+                        Precio
+                    </th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
 
+<div id="table-toolbar" class="form-group">
+    <a href="@Url.Action("Create")" id="new" data-bind="click: createClient" class="btn btn-raised btn-primary btn-rounded">Nuevo</a>
+    <a id="edit" data-bind="click: editClient" onclick="Editar()" hidden disabled class="btn btn-raised btn-success btn-rounded">Editar</a>
+    <a id="delete" data-bind="click: deleteClient" onclick="confirmDelete('', '', '', '')" hidden class="btn btn-raised btn-danger btn-rounded">Eliminar</a>
+</div>
 <script>
-    $(document).ready(function () {
-        $.ajax({
-            processing: true, // for show progress bar
-            serverSide: true, // for process server side
-            filter: true, // this is for disable filter (search box)
-            orderMulti: false, // for disable multiple column at once
-            url: "/Abono/Lista",
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                var html = '';
-                $.each(result, function (key, item) {
-                    html += '<tr>';
-                    html += '<td>' + item.Nombre + '</td>';
-                    html += '<td>' + item.Precio + '</td>';
-                    html += '<td class="center">';
-                    html += '<a style="margin-right: 10px;" class="btn-floating waves-effect waves-light teal" title="Editar" onclick = "Editar(' + item.Id + ')" id="' + item.Id + '"><i class="mdi-editor-border-color"></i></a>';
-                    html += '<a class="btn-floating waves-effect waves-light red" title="Eliminar" onclick="Eliminar(' + item.Id + ')" id="' + item.Id + '"><i class="mdi-action-delete"></i></a>';
-                    html += '</td>';
-                    html += '</tr>';
-                });
-                $('#tblAbono').html(html);
-
-            }
-        });
-
-
+    $('#table-sortable-server').on('check.bs.table uncheck.bs.table ' + 'check-all.bs.table uncheck-all.bs.table', function () {
+        $('#edit').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
+        $('#ficha').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
+        $('#delete').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
+        $('#abono').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
 
     });
 
-    function Editar(id) {
+    $('#eventsTable').on('check.bs.table', function (e, row) {
+        checkedRows.push({ id: row.id, name: row.name, forks: row.forks });
+        console.log(checkedRows);
+    });
+
+    function Editar(parameters) {
+        var id = parseInt($('#table-sortable-server').bootstrapTable('getSelections')[0].Id);
         window.location.href = "/Abono/Edit?id=" + encodeURIComponent(id);
-
-    }
-
-    function Eliminar(id) {
-        window.location.href = "/Abono/Delete?id=" + encodeURIComponent(id);
-
-    }
+    }    
 </script>

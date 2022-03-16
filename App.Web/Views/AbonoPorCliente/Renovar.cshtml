@@ -1,7 +1,6 @@
 ﻿@model App.Web.Models.AbonoPorClienteModel
 
-@using (Html.BeginForm("Create", "AbonoPorCliente", FormMethod.Post, new { id = "formValidate" }))
-{
+<form id="formValidate">
     <div class="col s12 m12 l6">
         <div class="card-panel" style="margin:0px!important">
             <h4 class="header2 center-align">Renovar Abono</h4>
@@ -10,4 +9,4 @@
             @Html.Partial("_CreateOrEdit")
         </div>
     </div>
-}
+</form>

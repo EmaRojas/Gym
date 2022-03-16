@@ -32,6 +32,8 @@ namespace App.Web.Models
 
         public bool Caja { get; set; }
 
+        public string PendientePago { get; set; }
+
         public List<SelectListItem> ListaCliente { get; set; }
 
         public List<SelectListItem> ListaAbono { get; set; }

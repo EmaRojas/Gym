@@ -5,13 +5,9 @@
 
     @Html.Hidden("ClienteId", Model.ClienteId)
     @Html.Hidden("Id", Model.Id)
-    <div class="col s12 m12 l6">
-        <div class="card-panel" style="margin:0px!important">
-            <h4 class="header2 center-align">Ficha de <span class="deep-purple-text">@Model.NombreCompleto</span></h4>
-            <div class="divider deep-purple lighten-2"></div>
-
-            @Html.Partial("_CreateOrEdit")
-
-        </div>
-    </div>
+    <center>
+        <h2>Ficha de <span class="deep-purple-text">@Model.NombreCompleto</span></h2>
+    </center>
+    <hr style="background-color: #5e35b1; height: 2px">
+    @Html.Partial("_CreateOrEdit")
 </form>

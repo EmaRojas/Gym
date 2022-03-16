@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace App.Core.Domain
 {
-    public  class FichaCliente : BaseEntity
+    public class FichaCliente : BaseEntity
     {
         public virtual Cliente Cliente { get; set; }
         public virtual bool Activo { get; set; }

@@ -70,6 +70,9 @@
     <Compile Include="CustomManyToManyConvention.cs" />
     <Compile Include="Infrastructure\Repository.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Mappings\NotificacionMapp.cs" />
+    <Compile Include="Mappings\PagosMercadoPagoMapp.cs" />
+    <Compile Include="Mappings\CentroSaludMapp.cs" />
     <Compile Include="Mappings\AbonoMapp.cs" />
     <Compile Include="Mappings\AbonoPorClienteMapp.cs" />
     <Compile Include="Mappings\ActividadMapp.cs" />
@@ -78,6 +81,7 @@
     <Compile Include="Mappings\DiaMapp.cs" />
     <Compile Include="Mappings\EmpresaMapp.cs" />
     <Compile Include="Mappings\FichaClienteMapp.cs" />
+    <Compile Include="Mappings\LogMapp.cs" />
     <Compile Include="Mappings\PagoMapp.cs" />
     <Compile Include="Mappings\RutinaMapp.cs" />
     <Compile Include="Mappings\RutinaPorActividadMapp.cs" />

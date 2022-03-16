@@ -23,14 +23,6 @@ function EliminarCliente(id) {
 
 
 $(document).ready(function () {
-    $('#datepicker').datepicker({
-        format: 'dd/mm/yyyy',
-        defaultDate: new Date(),
-        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-        ],
-    });
-
     $("#formValidate").validate({
         rules: {
             Nombre: {

@@ -1,6 +1,7 @@
 ﻿using App.Core.Domain;
 using App.Services.Generals;
 using App.Web.Models;
+using App.Web.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ using System.Web.Mvc;
 
 namespace App.Web.Controllers
 {
+    [AutorizarAcceso]
+
     public class AbonoController : BaseController
     {
         public IGeneralService<Abono> _serviceAbono { get; set; }
@@ -27,6 +30,38 @@ namespace App.Web.Controllers
         {
             return View();
         }
+
+        public JsonResult Table(int offset, int limit, string search)
+        {
+            var model = new List<AbonoModel>();
+            var lista = new List<Abono>();
+
+            //Si pongo  el nombre de otro alumno que está en la base de datos, me lo devuelve
+
+            if (search != string.Empty && search != null)
+            {
+                lista = _serviceAbono.GetByCriteria(x => x.Nombre.Contains(search) ||
+                x.Nombre.Contains(search) ||
+                x.Precio.ToString().Contains(search));
+            }
+            else
+            {
+                lista = _serviceAbono.GetAllByUser().OrderBy(x => x.Nombre).ToList();
+            }
+
+            foreach (var item in lista.Skip(offset).Take(limit))
+            {
+                model.Add(new AbonoModel()
+                {
+                    Id = item.Id,
+                    Nombre = item.Nombre,
+                    Precio = item.Precio,
+                });
+            }
+
+            return Json(new { rows = model, total = lista.Count() }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpGet]
         public ActionResult Lista()
@@ -51,7 +86,7 @@ namespace App.Web.Controllers
             };
 
             _serviceAbono.Create(abono);
-
+            SuccessNotification("Guardado Correctamente");
             return RedirectToAction("List");
         }
 
@@ -81,6 +116,8 @@ namespace App.Web.Controllers
             abono.Precio = model.Precio;
 
             _serviceAbono.Update(abono);
+            SuccessNotification("Editado Correctamente");
+
             return RedirectToAction("List");
         }
 

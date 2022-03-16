@@ -11,5 +11,6 @@ namespace App.Core.Domain
     {
         public virtual string Nombre { get; set; }
         public virtual string Url { get; set; }
+        public virtual string Area { get; set; }
     }
 }

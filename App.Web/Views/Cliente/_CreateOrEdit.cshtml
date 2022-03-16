@@ -6,21 +6,25 @@
 <script src="~/Scripts/Proyecto/Cliente.js"></script>
 
 <div class="row m-b-20">
-    <div class="form-group bmd-form-group col-md-4">
+    <div class="form-group bmd-form-group col-md-3">
         <label class="bmd-label-static">Nombre *</label>
         @Html.TextBoxFor(model => model.Nombre, new { autofocus = "autofocus", @class = "form-control", required = "required", style = "width: 100%;" })
     </div>
-    <div class="form-group bmd-form-group col-md-4">
+    <div class="form-group bmd-form-group col-md-3">
         <label class="bmd-label-static">Apellido *</label>
         @Html.TextBoxFor(model => model.Apellido, new { autofocus = "autofocus", @class = "form-control", required = "required", style = "width: 100%;" })
     </div>
-    <div class="form-group bmd-form-group col-md-4">
+    <div class="form-group bmd-form-group col-md-3">
         <label class="bmd-label-static">D.N.I. *</label>
         @Html.TextBoxFor(model => model.Dni, new { required = "required", @class = "form-control", style = "width: 100%;" })
     </div>
     <div class="form-group bmd-form-group col-md-3">
+        <label class="bmd-label-static">Centro Salud *</label>
+        @Html.DropDownList("CentroId", Model.ListaCentros, new { @class = "form-control pmd-select2 select-with-search", required = true, style = "width: 100%;" })
+    </div>
+    <div class="form-group bmd-form-group col-md-3">
         <label class="bmd-label-static">Fecha de nacimiento *</label>
-        @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control datepicker", @id = "datepicker", @Value = Model.FechaNacimiento, required = "required", style = "width: 100%;" })
+        @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @Value = Model.FechaNacimiento, required = "required", style = "width: 100%;" })
     </div>
 
     <div class="form-group bmd-form-group col-md-3">
@@ -39,8 +43,7 @@
 
 </div>
 
-<center>
-    <div class="form-group">
+    <div class="form-group pull-right">
         <a href="@Url.Action("List")" class="btn btn-outline-primary" name="action">
             Volver
         </a>
@@ -51,4 +54,10 @@
             Guardar
         </button>
     </div>
-</center>
+    <script>
+    $(document).ready(function () {
+        $('#FechaNacimiento').datepicker({
+            format: 'dd/mm/yyyy',
+              });
+    });
+    </script>

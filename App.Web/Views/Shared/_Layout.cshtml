@@ -97,23 +97,23 @@
                             <ul class="list-unstyled" id="navigation">
 
                                 <li>
-                                    <a class="btn btn-flat collapsed" href="@Url.Action("Index", "Dashboard")">
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("List", "Cliente")">
                                         <span class="btn-title">Inicio</span>
                                         <i class="material-icons pull-left icon">home</i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="btn btn-flat collapsed" href="@Url.Action("List", "Alumno")">
-                                        <span class="btn-title">Alumno</span>
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("List", "Cliente")">
+                                        <span class="btn-title">Cliente</span>
                                         <i class="material-icons pull-left icon">person</i>
                                     </a>
                                 </li>
-                                <li>
+                                @*<li>
                                     <a class="btn btn-flat collapsed" href="@Url.Action("List", "Actividad")">
                                         <span class="btn-title">Actividad</span>
                                         <i class="material-icons">directions_run</i>
                                     </a>
-                                </li>
+                                </li>*@
                                 <li>
                                     <a class="btn btn-flat collapsed" href="@Url.Action("List", "Abono")">
                                         <span class="btn-title">Abono</span>
@@ -121,12 +121,12 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="btn btn-flat collapsed" href="@Url.Action("List", "AbonoPorAlumno")">
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("List", "AbonoPorCliente")">
                                         <span class="btn-title">Asignación</span>
                                         <i class="material-icons">folder</i>
                                     </a>
                                 </li>
-                                <li>
+                                @*<li>
                                     <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#theme-components" data-target="#caja" aria-expanded="false">
                                         <span class="btn-title">Caja</span>
                                         <i class="material-icons">arrow_drop_down</i>
@@ -222,7 +222,7 @@
                                         <span class="btn-title">Fichaje</span>
                                         <i class="material-icons">query_builder</i>
                                     </a>
-                                </li>
+                                </li>*@
                             </ul>
                         </div>
                     </div>
@@ -270,7 +270,6 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
 
             $(".select-with-search").select2({
                 theme: "bootstrap",

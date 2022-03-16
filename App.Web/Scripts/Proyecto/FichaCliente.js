@@ -82,14 +82,16 @@
             dataType: "json",
             success: function (result) {
                 if (result.Success) {
-                    alertify.success(result.Message);
+                    NotificationSuccess(result.Message)
+                    //NotificationSuccess(result.Message);
 
                     setTimeout(function () {
                         window.location = result.Url;
                     }, 2000);
                 }
                 else {
-                    alertify.error(result.Message);
+                    NotificationError(result.Message)
+                    //NotificationError(result.Message);
                 }            }
         });
 

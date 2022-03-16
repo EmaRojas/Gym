@@ -1,7 +1,7 @@
 ﻿@model App.Web.Models.AbonoPorClienteModel
 
-@using (Html.BeginForm("Create", "AbonoPorCliente", FormMethod.Post, new { id = "formValidate" }))
-{
+<form id="formValidate">
+
     @Html.Hidden("Id", Model.Id)
 
     <div class="col s12 m12 l6">
@@ -12,4 +12,4 @@
             @Html.Partial("_CreateOrEdit")
         </div>
     </div>
-}
+</form>

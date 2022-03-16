@@ -1,6 +1,7 @@
 ﻿using App.Core.Domain;
 using App.Services.Generals;
 using App.Web.Models;
+using App.Web.Security;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -10,6 +11,8 @@ using System.Web.Mvc;
 
 namespace App.Web.Controllers
 {
+    [AutorizarAcceso]
+
     public class AbonoPorClienteController : BaseController
     {
         private readonly IGeneralService<AbonoPorCliente> _serviceAbonoPorCliente;
@@ -23,10 +26,52 @@ namespace App.Web.Controllers
             _abonoService = abonoService;
         }
 
-        public ActionResult List()
+        public ActionResult List(int id = 0)
         {
-            return View();
+            var model = new AbonoPorClienteModel();
+            model.ClienteId = id;
+            return View(model);
         }
+
+        public JsonResult Table(int offset, int limit, string search, int clienteId = 0, string rPagado = "", string rVencimiento = "")
+        {
+            var abonoPorClientes = new List<AbonoPorCliente>();
+            var model = new List<AbonoPorClienteListModel>();
+            if (clienteId != 0)
+            {
+                abonoPorClientes = _serviceAbonoPorCliente.GetByCriteria(x => x.Cliente.Id == clienteId);
+            }
+            else
+            {
+                abonoPorClientes = _serviceAbonoPorCliente.GetAllByUser();
+            }
+
+            var listaOrdenada = abonoPorClientes.OrderByDescending(x => x.FechaVencimiento);
+
+            foreach (var item in listaOrdenada.Skip(offset).Take(limit))
+            {
+                model.Add(new AbonoPorClienteListModel()
+                {
+                    Id = item.Id,
+                    Dni = item.Cliente.Dni,
+                    Cliente = item.Cliente != null ? item.Cliente.Nombre + " " + item.Cliente.Apellido : "",
+                    Abono = item.Abono != null ? item.Abono.Nombre : "",
+                    FechaIngreso = item.FechaIngreso?.ToString("dd/MM/yyyy") ?? "",
+                    FechaVencimiento = item.FechaVencimiento?.ToString("dd/MM/yyyy") ?? "",
+                    Precio = item.Precio.ToString(),
+                    Pagado = item.Pagado == true ? "<span class=\"m-r-10 tag tag-pill tag-success tag-sm\">Sí</span>" : "<span class=\"m-r-10 tag tag-pill tag-danger tag-sm\">No</span>",
+                    Ficho = item.Ficho,
+                    Estado = item.FechaVencimiento < DateTime.UtcNow.AddHours(-3) ? "<span class=\"m-r-10 tag tag-pill tag-danger tag-sm\">Vencido</span>" : "<span class=\"m-r-10 tag tag-pill tag-success tag-sm\">Disponible</span>",
+                    Vencido = item.FechaVencimiento < DateTime.UtcNow.AddHours(-3) ? true : false,
+                    PendientePago = item?.PendientePego
+                });
+            }
+
+            model = model.OrderByDescending(x => x.FechaVencimiento).ToList();
+
+            return Json(new { rows = model, total = abonoPorClientes.Count() }, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpGet]
         public ActionResult Create(int id = 0)
@@ -41,7 +86,7 @@ namespace App.Web.Controllers
             }
             else
             {
-                abonoPorCliente.ListaCliente.Add(new SelectListItem() { Text = "Seleccione...", Disabled=true, Selected=true, Value = "" });
+                abonoPorCliente.ListaCliente.Add(new SelectListItem() { Text = "Seleccione...", Value = "default" });
 
                 foreach (var cliente in _clienteService.GetAllByUser().OrderBy(x => x.Nombre))
                 {
@@ -56,9 +101,9 @@ namespace App.Web.Controllers
             {
                 abonoPorCliente.ListaAbono.Add(new SelectListItem() { Text = abono.Nombre, Value = abono.Id.ToString() });
             }
-            DateTime fecha = DateTime.Today.Date;
+            DateTime fecha = DateTime.UtcNow.AddHours(-3).Date;
             fecha = fecha.Date.AddMonths(1);            
-            abonoPorCliente.FechaVencimiento = fecha.ToShortDateString();
+            abonoPorCliente.FechaVencimiento = fecha.ToString("dd/MM/yyyy");
 
             return View(abonoPorCliente);
         }
@@ -87,9 +132,10 @@ namespace App.Web.Controllers
 
                 var abonoPorAlumno = new AbonoPorCliente()
                 {
+                    PendientePego = model.PendientePago,
                     Cliente = cliente ?? null,
                     Abono = abono ?? null,
-                    FechaVencimiento = DateTime.Parse(model.FechaVencimiento),
+                    FechaVencimiento = DateTime.ParseExact(model.FechaVencimiento, "dd/MM/yyyy",null),
                     FechaIngreso = DateTime.UtcNow.AddHours(-3),
                     Precio = double.Parse(model.Precio.Replace(".", ",")),
                     Pagado = model.Pagado
@@ -117,11 +163,12 @@ namespace App.Web.Controllers
             {
                 Id = abonoPorCliente.Id,
                 ClienteId = abonoPorCliente.Cliente.Id,
-                AbonoId = abonoPorCliente.Abono.Id,
+                AbonoId = abonoPorCliente.Abono != null ? abonoPorCliente.Abono.Id : 0,
                 FechaVencimiento = abonoPorCliente.FechaVencimiento.Value.ToShortDateString(),
                 FechaIngreso = abonoPorCliente.FechaIngreso.Value.ToShortDateString(),
                 Precio = abonoPorCliente.Precio.ToString().Replace(",", "."),
                 Pagado = abonoPorCliente.Pagado,
+                PendientePago = abonoPorCliente?.PendientePego,
             };
 
             model.ListaCliente.Add(new SelectListItem() { Text = abonoPorCliente.Cliente.Nombre + " " + abonoPorCliente.Cliente.Apellido, Value = abonoPorCliente.Cliente.Id.ToString() });
@@ -149,15 +196,14 @@ namespace App.Web.Controllers
             var abono = _abonoService.GetByIdByUser(model.AbonoId);
 
             abonoPorCliente.Abono = abono ?? null;
-            abonoPorCliente.FechaVencimiento = DateTime.Parse(model.FechaVencimiento);
+            abonoPorCliente.FechaVencimiento = DateTime.ParseExact(model.FechaVencimiento, "dd/MM/yyyy",null);
             abonoPorCliente.Precio = double.Parse(model.Precio.Replace(".", ","));
             abonoPorCliente.Pagado = model.Pagado;
+            abonoPorCliente.PendientePego = model.PendientePago;
 
             return Json(new { Success = true, Url = "/AbonoPorCliente/List", Message = "Se guardo correctamente " + abonoPorCliente.Cliente.Nombre + " " + abonoPorCliente.Cliente.Apellido }, JsonRequestBehavior.AllowGet);
 
         }
-
-
 
         [HttpGet]
         public string InputPrecio(int id)
@@ -165,81 +211,6 @@ namespace App.Web.Controllers
             var abono = _abonoService.GetByIdByUser(id);
 
             return abono.Precio.ToString();
-        }
-
-        public ActionResult ListaAbonosAsignados()
-        {
-            var asignaciones = _serviceAbonoPorCliente.GetAllByUser();
-            var lista = new List<AbonoPorClienteListModel>();
-
-            foreach (var item in asignaciones)
-            {
-                lista.Add(new AbonoPorClienteListModel()
-                {
-                    Id = item.Id,
-                    Cliente = item.Cliente.Nombre + " " + item.Cliente.Apellido,
-                    Dni = item.Cliente.Dni,
-                    Abono = item.Abono.Nombre,
-                    FechaIngreso = item.FechaIngreso.Value.ToShortDateString(),
-                    FechaVencimiento = item.FechaVencimiento.Value.ToShortDateString(),
-                    Precio = item.Precio.ToString(),
-                    Pagado = item.Pagado == true ? "<span class=\"center chip green white-text\">Sí</span>" : "<span class=\"center chip red white-text\">No</span>",
-                    Estado = item.FechaVencimiento < DateTime.UtcNow.AddHours(-3) ? "<span class=\"center chip red white-text\">Vencido</span>" : "<span class=\"center chip green white-text\">Disponible</span>",
-                    Vencido = item.FechaVencimiento < DateTime.UtcNow.AddHours(-3) ? true : false,
-                    Opciones = "<a style=\"margin - right: 5px;\" class=\"btn-floating waves-effect waves-light yellow\" title=\"Renovar\" onclick=\"Renovar('"+item.Id+"')\" id=\"'" + item.Id + "'\"><i class=\"mdi-action-assignment\"></i></a>"
-                    + "<a style=\"margin - right: 5px;\" class=\"btn-floating waves-effect waves-light teal\" title=\"Editar\" onclick=\"Editar('" + item.Id + "')\" id=\"'" + item.Id + "'\"><i class=\"mdi-editor-border-color\"></i></a>"
-                }) ;
-            }
-
-            NameValueCollection nvc = HttpUtility.ParseQueryString(Request.Url.Query);
-            string sEcho = nvc["sEcho"].ToString();
-            string sSearch = nvc["sSearch"].ToString();
-            int iDisplayStart = Convert.ToInt32(nvc["iDisplayStart"]);
-            int iDisplayLength = Convert.ToInt32(nvc["iDisplayLength"]);
-
-            //iSortCol gives your Column numebr of for which sorting is required
-            int iSortCol = Convert.ToInt32(nvc["iSortCol_0"]);
-            //provides your sort order (asc/desc)
-            string sortOrder = nvc["sSortDir_0"].ToString();
-
-            var Count = lista.Count();
-
-            var newList = lista.OrderByDescending(x => x.FechaVencimiento).Skip(iDisplayStart).Take(10);
-
-            //Search query when sSearch is not empty
-            if (sSearch != "" && sSearch != null) //If there is search query
-            {
-
-                newList = lista.Where(a => a.Cliente.ToLower().Contains(sSearch.ToLower())
-                                  || a.Abono.ToLower().Contains(sSearch.ToLower())
-                                  || a.FechaVencimiento.ToLower().Contains(sSearch.ToLower())
-                                  || a.Precio.ToLower().Contains(sSearch.ToLower())
-                                  || a.Pagado.ToLower().Contains(sSearch.ToLower())
-                                  || a.Estado.ToLower().Contains(sSearch.ToLower())
-                                  || a.FechaIngreso.ToLower().Contains(sSearch.ToLower())
-                                  )
-                                  .ToList();
-
-                Count = newList.Count();
-                // Call SortFunction to provide sorted Data, then Skip using iDisplayStart  
-                newList = SortFunction(iSortCol, sortOrder, newList.ToList()).Skip(iDisplayStart).Take(iDisplayLength).ToList();
-            }
-            else
-            {
-                //get data from database
-                newList = lista.ToList(); //speficiy conditions if there is any using .Where(Condition)                             
-
-
-                // Call SortFunction to provide sorted Data, then Skip using iDisplayStart  
-                newList = SortFunction(iSortCol, sortOrder, newList.ToList()).Skip(iDisplayStart).Take(iDisplayLength).ToList();
-            }
-
-
-            var abonoPorClientePage = new JqueryDatatableParam<AbonoPorClienteListModel>(newList, Count, Count, sEcho);
-
-            //lista = lista.OrderByDescending(x => x.FechaVencimiento).ToList();
-
-            return Json(abonoPorClientePage, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -280,29 +251,6 @@ namespace App.Web.Controllers
             }
 
             return View(model);
-        }
-
-        private List<AbonoPorClienteListModel> SortFunction(int iSortCol, string sortOrder, List<AbonoPorClienteListModel> list)
-        {
-
-            //Sorting for String columns
-            if (iSortCol == 1 || iSortCol == 0 || iSortCol == 2 || iSortCol == 3|| iSortCol == 4 || iSortCol == 5 || iSortCol == 6)
-            {
-                Func<AbonoPorClienteListModel, string> orderingFunction = (c => iSortCol == 0 ? c.Cliente : iSortCol == 1 ? c.Abono : iSortCol == 2 ? c.Precio : iSortCol == 3 ? c.FechaIngreso : iSortCol == 4 ? c.FechaVencimiento : iSortCol == 5? c.Pagado : iSortCol == 6 ? c.Estado : c.Cliente); // compare the sorting column
-
-                if (sortOrder == "desc")
-                {
-                    list = list.OrderByDescending(orderingFunction).ToList();
-                }
-                else
-                {
-                    list = list.OrderBy(orderingFunction).ToList();
-
-                }
-            }
-
-
-            return list;
         }
 
         //public ActionResult Delete(int id)

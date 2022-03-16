@@ -46,12 +46,16 @@
     <Compile Include="Domain\AbonoPorCliente.cs" />
     <Compile Include="Domain\Actividad.cs" />
     <Compile Include="Domain\Caja.cs" />
+    <Compile Include="Domain\CentroSalud.cs" />
     <Compile Include="Domain\Cliente.cs" />
     <Compile Include="Domain\Dia.cs" />
     <Compile Include="Domain\Empresa.cs" />
     <Compile Include="Domain\FichaCliente.cs" />
     <Compile Include="Domain\ForgotPassword.cs" />
+    <Compile Include="Domain\Log.cs" />
+    <Compile Include="Domain\Notificacion.cs" />
     <Compile Include="Domain\Pago.cs" />
+    <Compile Include="Domain\PagosMercadoPago.cs" />
     <Compile Include="Domain\Rutina.cs" />
     <Compile Include="Domain\RutinaPorActividad.cs" />
     <Compile Include="Domain\User.cs" />
