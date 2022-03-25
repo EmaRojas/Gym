@@ -70,6 +70,7 @@
     <Compile Include="CustomManyToManyConvention.cs" />
     <Compile Include="Infrastructure\Repository.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Mappings\TurnoMapp.cs" />
     <Compile Include="Mappings\NotificacionMapp.cs" />
     <Compile Include="Mappings\PagosMercadoPagoMapp.cs" />
     <Compile Include="Mappings\CentroSaludMapp.cs" />

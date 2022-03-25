@@ -109,11 +109,11 @@
                                     </a>
                                 </li>
                                 @*<li>
-                                    <a class="btn btn-flat collapsed" href="@Url.Action("List", "Actividad")">
-                                        <span class="btn-title">Actividad</span>
-                                        <i class="material-icons">directions_run</i>
-                                    </a>
-                                </li>*@
+            <a class="btn btn-flat collapsed" href="@Url.Action("List", "Actividad")">
+                <span class="btn-title">Actividad</span>
+                <i class="material-icons">directions_run</i>
+            </a>
+        </li>*@
                                 <li>
                                     <a class="btn btn-flat collapsed" href="@Url.Action("List", "Abono")">
                                         <span class="btn-title">Abono</span>
@@ -126,103 +126,109 @@
                                         <i class="material-icons">folder</i>
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="btn btn-flat collapsed" href="@Url.Action("ConsultaTurno", "Turno")">
+                                        <span class="btn-title">Turnos</span>
+                                        <i class="material-icons">folder</i>
+                                    </a>
+                                </li>
                                 @*<li>
-                                    <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#theme-components" data-target="#caja" aria-expanded="false">
-                                        <span class="btn-title">Caja</span>
-                                        <i class="material-icons">arrow_drop_down</i>
-                                        <div class="ripple-container"></div>
-                                    </button>
-                                    <div class="collapse" id="caja" style="height: 0px;" aria-expanded="false">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a href="@Url.Action("List", "Caja")" class="btn btn-flat">
-                                                    <span class="btn-title">Movimientos Caja</span>
+            <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#theme-components" data-target="#caja" aria-expanded="false">
+                <span class="btn-title">Caja</span>
+                <i class="material-icons">arrow_drop_down</i>
+                <div class="ripple-container"></div>
+            </button>
+            <div class="collapse" id="caja" style="height: 0px;" aria-expanded="false">
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="@Url.Action("List", "Caja")" class="btn btn-flat">
+                            <span class="btn-title">Movimientos Caja</span>
 
-                                                    <i class="material-icons">compare_arrows</i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("ConsultaCaja", "Caja")" class="btn btn-flat">
-                                                    <span class="btn-title">Consulta de Movimientos</span>
+                            <i class="material-icons">compare_arrows</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("ConsultaCaja", "Caja")" class="btn btn-flat">
+                            <span class="btn-title">Consulta de Movimientos</span>
 
-                                                    <i class="material-icons">search</i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("HistorialCaja", "Caja")" class="btn btn-flat">
-                                                    <span class="btn-title">Historial Caja</span>
-                                                    <i class="material-icons">unarchive</i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("List", "Condicion")" class="btn btn-flat">
-                                                    <span class="btn-title">Condición</span>
-                                                    <i class="material-icons">description</i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#theme-components" data-target="#reporte" aria-expanded="false">
-                                        <span class="btn-title">REPORTES</span>
-                                        <i class="material-icons">arrow_drop_down</i>
-                                        <div class="ripple-container"></div>
-                                    </button>
-                                    <div class="collapse" id="reporte" style="height: 0px;" aria-expanded="false">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a class="btn btn-flat collapsed" href="@Url.Action("Index", "Reporte")">
-                                                    <span class="btn-title">Alumnos a recuperar</span>
-                                                    <i class="material-icons pull-left icon">description</i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="btn btn-flat collapsed" href="@Url.Action("Index", "Cumpleaños")">
-                                                    <span class="btn-title">Cumpleaños</span>
-                                                    <i class="material-icons pull-left icon">cake</i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#theme-components" data-target="#grafico" aria-expanded="false">
-                                        <span class="btn-title">Graficos</span>
-                                        <i class="material-icons">arrow_drop_down</i>
-                                        <div class="ripple-container"></div>
-                                    </button>
-                                    <div class="collapse" id="grafico" style="height: 0px;" aria-expanded="false">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <a href="@Url.Action("FiltroGrafico","Grafico")" class="btn btn-flat">
-                                                    <i class="material-icons">pie_chart</i>
-                                                    <span class="btn-title">Actividad por Mes</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("GraficoCantAbono","Grafico")" class="btn btn-flat">
-                                                    <i class="material-icons">insert_chart</i>
-                                                    <span class="btn-title">Cantidad de Abonos</span>
-                                                </a>
-                                            </li>
+                            <i class="material-icons">search</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("HistorialCaja", "Caja")" class="btn btn-flat">
+                            <span class="btn-title">Historial Caja</span>
+                            <i class="material-icons">unarchive</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("List", "Condicion")" class="btn btn-flat">
+                            <span class="btn-title">Condición</span>
+                            <i class="material-icons">description</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#theme-components" data-target="#reporte" aria-expanded="false">
+                <span class="btn-title">REPORTES</span>
+                <i class="material-icons">arrow_drop_down</i>
+                <div class="ripple-container"></div>
+            </button>
+            <div class="collapse" id="reporte" style="height: 0px;" aria-expanded="false">
+                <ul class="list-unstyled">
+                    <li>
+                        <a class="btn btn-flat collapsed" href="@Url.Action("Index", "Reporte")">
+                            <span class="btn-title">Alumnos a recuperar</span>
+                            <i class="material-icons pull-left icon">description</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="btn btn-flat collapsed" href="@Url.Action("Index", "Cumpleaños")">
+                            <span class="btn-title">Cumpleaños</span>
+                            <i class="material-icons pull-left icon">cake</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <button class="btn btn-flat collapsed" data-toggle="collapse" data-parent="#theme-components" data-target="#grafico" aria-expanded="false">
+                <span class="btn-title">Graficos</span>
+                <i class="material-icons">arrow_drop_down</i>
+                <div class="ripple-container"></div>
+            </button>
+            <div class="collapse" id="grafico" style="height: 0px;" aria-expanded="false">
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="@Url.Action("FiltroGrafico","Grafico")" class="btn btn-flat">
+                            <i class="material-icons">pie_chart</i>
+                            <span class="btn-title">Actividad por Mes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("GraficoCantAbono","Grafico")" class="btn btn-flat">
+                            <i class="material-icons">insert_chart</i>
+                            <span class="btn-title">Cantidad de Abonos</span>
+                        </a>
+                    </li>
 
-                                        </ul>
-                                    </div>
-                                </li>
+                </ul>
+            </div>
+        </li>
 
-                                <li>
-                                    <a class="btn btn-flat collapsed" href="@Url.Action("Panel", "TurnoPorAsignacion")">
-                                        <span class="btn-title">Panel Turnos</span>
-                                        <i class="material-icons">insert_invitation</i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="btn btn-flat collapsed" href="@Url.Action("Fichaje", "Home")">
-                                        <span class="btn-title">Fichaje</span>
-                                        <i class="material-icons">query_builder</i>
-                                    </a>
-                                </li>*@
+        <li>
+            <a class="btn btn-flat collapsed" href="@Url.Action("Panel", "TurnoPorAsignacion")">
+                <span class="btn-title">Panel Turnos</span>
+                <i class="material-icons">insert_invitation</i>
+            </a>
+        </li>
+        <li>
+            <a class="btn btn-flat collapsed" href="@Url.Action("Fichaje", "Home")">
+                <span class="btn-title">Fichaje</span>
+                <i class="material-icons">query_builder</i>
+            </a>
+        </li>*@
                             </ul>
                         </div>
                     </div>

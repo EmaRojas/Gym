@@ -33,7 +33,6 @@
             FechaVencimiento: $("#FechaVencimiento").val(),
             Pagado: $("#ckPagado").is(':checked'),
             PendientePago: $("#PendientePago").val(),
-
         };
 
         var url = "";

@@ -58,6 +58,7 @@
     <Compile Include="Domain\PagosMercadoPago.cs" />
     <Compile Include="Domain\Rutina.cs" />
     <Compile Include="Domain\RutinaPorActividad.cs" />
+    <Compile Include="Domain\Turno.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Common\BaseEntity.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />

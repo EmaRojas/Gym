@@ -63,7 +63,7 @@ namespace App.Web.Controllers
                 serializeModel.Email = consult.Email;
                 serializeModel.Role = consult.Role;
                 serializeModel.CompanyName = _empresaService.GetById(consult.EmpresaId).Nombre;
-                serializeModel.ExpirationDate = consult.FechaVencimiento.ToString();
+                serializeModel.ExpirationDate = consult.FechaVencimiento.ToString("dd/MM/yyyy");
 
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
 
@@ -73,7 +73,7 @@ namespace App.Web.Controllers
                 byte[] encryted = System.Text.Encoding.Unicode.GetBytes(userData.ToString());
                 encodedCookie = Convert.ToBase64String(encryted);
                 Response.Cookies["gym"].Value = encodedCookie;
-                Response.Cookies["gym"].Expires = DateTime.Now.AddYears(1);
+                Response.Cookies["gym"].Expires = DateTime.Now.AddHours(1);
                 Response.Cookies.Set(Response.Cookies["gym"]);
 
 
@@ -132,7 +132,7 @@ namespace App.Web.Controllers
             serializeModel.FullName = usuario.FullName;
             serializeModel.Email = usuario.Email;
             serializeModel.Role = usuario.Role;
-            serializeModel.ExpirationDate = usuario.FechaVencimiento.ToString();
+            serializeModel.ExpirationDate = usuario.FechaVencimiento.ToString("dd/MM/yyyy");
             serializeModel.CompanyName = empresa.Nombre;
 
             JavaScriptSerializer serializer = new JavaScriptSerializer();

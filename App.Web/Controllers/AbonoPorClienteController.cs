@@ -164,8 +164,8 @@ namespace App.Web.Controllers
                 Id = abonoPorCliente.Id,
                 ClienteId = abonoPorCliente.Cliente.Id,
                 AbonoId = abonoPorCliente.Abono != null ? abonoPorCliente.Abono.Id : 0,
-                FechaVencimiento = abonoPorCliente.FechaVencimiento.Value.ToShortDateString(),
-                FechaIngreso = abonoPorCliente.FechaIngreso.Value.ToShortDateString(),
+                FechaVencimiento = abonoPorCliente.FechaVencimiento.Value.ToString("dd/MM/yyyy"),
+                FechaIngreso = abonoPorCliente.FechaIngreso.Value.ToString("dd/MM/yyyy"),
                 Precio = abonoPorCliente.Precio.ToString().Replace(",", "."),
                 Pagado = abonoPorCliente.Pagado,
                 PendientePago = abonoPorCliente?.PendientePego,
@@ -236,7 +236,7 @@ namespace App.Web.Controllers
             {
                 ClienteId = abonoPorCliente.Cliente.Id,
                 AbonoId = abonoPorCliente.Abono.Id,
-                FechaVencimiento = fechaVencimiento.ToShortDateString(),
+                FechaVencimiento = fechaVencimiento.ToString("dd/MM/yyyy"),
                 //FechaIngreso = fecaIngreso.tosho,
                 //Precio = abonoPorAlumno.Precio.ToString().Replace(",", "."),
                 Precio = abonoPorCliente.Abono.Precio.ToString().Replace(",", "."),
@@ -269,6 +269,5 @@ namespace App.Web.Controllers
 
         //    return RedirectToAction("List", new { id = alumnoId });
         //}
-
     }
 }

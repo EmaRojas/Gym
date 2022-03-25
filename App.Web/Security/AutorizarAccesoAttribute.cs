@@ -11,6 +11,9 @@ namespace App.Web.Security
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
+            if(UserData.ExpirationDate == String.Empty)
+                return false;
+
             var fechaVencimiento = DateTime.Parse(UserData.ExpirationDate);
 
             return fechaVencimiento.Date >= DateTime.UtcNow.AddHours(-3).Date;

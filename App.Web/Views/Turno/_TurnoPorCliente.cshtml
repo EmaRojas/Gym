@@ -1,0 +1,78 @@
+﻿@model App.Web.Models.TurnoPorClienteModel
+
+@Html.Hidden("AbonoPorAlumnoId", Model.AbonoPorAlumnoId)
+
+<div class="row">
+    <div class="form-group bmd-form-group col-md-6">
+        <label class="bmd-label-static">Cliente</label>
+        @Html.TextBoxFor(model => model.Cliente, new { @class = "form-control", style = "width: 100%;" })
+    </div>
+
+    <div class="form-group bmd-form-group col-md-6">
+        <label class="bmd-label-static">Abono</label>
+        @Html.TextBoxFor(model => model.Abono, new { @class = "form-control", style = "width: 100%;" })
+    </div>
+
+    <button id="toolbar" type="button" onclick="addNewRow()" class="btn btn-primary bmd-btn-fab bmd-btn-fab-sm">
+        <i class="fa fa-plus"></i>
+        <div class="ripple-container"></div>
+    </button>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th data-align="center" data-sort-order="asc">
+                    Dia
+                </th>
+                <th data-align="center" data-sort-order="asc" style="width: 35%">
+                    Hora Inicial
+                </th>
+                <th data-align="center" data-sort-order="asc" style="width: 35%">
+                    Hora Final
+                </th>
+                <th data-align="center">
+                    Opciones
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            @foreach (var item in Model.ListaTurnos)
+            {
+                @Html.Partial("_tableRow", item)
+                ;
+            }
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<div class="form-group pull-right">
+    <button type="submit" class="btn btn-primary">Guardar<div class="ripple-container"></div></button>
+
+</div>
+
+
+
+
+
+<script>
+    //Agregar nueva fila
+    function addNewRow() {
+        $.ajax({
+                method: "GET",
+                url: "@Url.Action("AddTableRow", "Turno")"
+            })
+            .done(function(html) {
+                $("#tableBody").append(html);
+            });
+    }
+
+    $("#tableBody").on("click",
+        "a.eliminarFila",
+        function () {
+            $(this).closest("tr").remove();
+        });
+
+</script>

@@ -1,0 +1,62 @@
+﻿@model App.Web.Models.TurnoModel
+
+<tr>
+    @using (Html.BeginCollectionItem("ListaTurnos"))
+    {
+        @Html.HiddenFor(x => x.Id)
+        <td>
+            @Html.DropDownListFor(model => Model.Dia, Model.Dias, new { @class = "form-control pmd-select2 select-with-search", style = "width: 100%;" })
+        </td>
+
+        <td>
+            @Html.DropDownListFor(model => Model.HoraInicial, Model.Horas, new { @class = "form-control pmd-select2 select-with-search", id = Model.HoraInicialId, style = "width: 100%;" })
+
+        </td>
+
+        <td>
+            @Html.DropDownListFor(model => Model.HoraFinal, Model.Horas, new { @class = "form-control pmd-select2 select-with-search", id = Model.HoraFinId, style = "width: 100%;" })
+
+        </td>
+        <td style="text-align:center">
+            <a class="eliminarFila" data-rel="tooltip" data-original-title="Eliminar"><i style="color: red; font-size: 120%; padding-top: 7%;" class="fa fa-trash"></i></a>
+        </td>
+    }
+</tr>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $(".select-with-search").select2({
+            theme: "bootstrap"
+        });
+
+        if ($('#@Model.HoraInicialId').val() != "") {
+            $('#@Model.HoraFinId').attr("disabled", false)
+        }
+        else {
+            $('#@Model.HoraFinId').attr("disabled", true)
+        }
+    });
+
+    $('#@Model.HoraInicialId').change(function () {
+        debugger
+        if ($('#@Model.HoraInicialId').val() != "") {
+            $('#@Model.HoraFinId').attr("disabled", false)
+        }
+        else {
+            $('#@Model.HoraFinId').attr("disabled", true)
+        }
+                $.ajax({
+                    url: '@Url.Action("ListaHoras", "Abono")',
+                    method: "GET",
+                    data: { index: $("#@Model.HoraInicialId").val() },
+                }).done((result) => {
+                    $("#@Model.HoraFinId").empty().trigger('change')
+                    $.each(result, function (i, item) {
+                        debugger;
+                        $("#@Model.HoraFinId").append($("<option>", { value: item.Value, text: item.Text }));
+                    });
+                });
+    });
+</script>

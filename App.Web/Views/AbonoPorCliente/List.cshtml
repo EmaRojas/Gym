@@ -30,14 +30,14 @@
 <div id="table-toolbar" class="form-group">
     <a href="@Url.Action("Create", new { id = Model.ClienteId})" id="new" class="btn btn-raised btn-primary btn-rounded">Nuevo</a>
     <a id="edit" onclick="Editar()" hidden class="btn btn-raised btn-success btn-rounded">Editar</a>
-    <a id="renovar" onclick="Renovar()" hidden class="btn btn-raised btn-warning btn-rounded">Renovar</a>
+    <a id="turno" onclick="Turno()" hidden class="btn btn-raised btn-warning btn-rounded">Turnos</a>
     <a id="delete" onclick="Eliminar()" hidden class="btn btn-raised btn-danger btn-rounded">Eliminar</a>
 </div>
 <script>
     $('#table-sortable-server').on('check.bs.table uncheck.bs.table ' + 'check-all.bs.table uncheck-all.bs.table', function () {
         $('#edit').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
         //$('#delete').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
-        $('#renovar').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
+        $('#turno').prop('hidden', !$('#table-sortable-server').bootstrapTable('getSelections').length)
     });
 
     $('#eventsTable').on('check.bs.table', function (e, row) {
@@ -50,9 +50,9 @@
         window.location.href = "/AbonoPorCliente/Edit?id=" + encodeURIComponent(id) + "&clienteId=" + @Model.ClienteId;
     }
 
-    function Renovar(parameters) {
+    function Turno(parameters) {
         var id = parseInt($('#table-sortable-server').bootstrapTable('getSelections')[0].Id);
-        window.location.href = "/AbonoPorCliente/Renovar?id=" + encodeURIComponent(id) + "&clienteId=" + @Model.ClienteId;
+        window.location.href = "/Turno/Create?id=" + encodeURIComponent(id);
     }
 
       @*function Eliminar(parameters) {

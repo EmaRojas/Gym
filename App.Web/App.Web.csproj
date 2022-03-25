@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BeginCollectionItem, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BeginCollectionItem.1.2.1.0\lib\net35\BeginCollectionItem.dll</HintPath>
+    </Reference>
     <Reference Include="LightInject, Version=6.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LightInject.6.4.1\lib\net46\LightInject.dll</HintPath>
     </Reference>
@@ -156,6 +159,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MercadoPagoController.cs" />
     <Compile Include="Controllers\SuscripcionController.cs" />
+    <Compile Include="Controllers\TurnoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -174,6 +178,8 @@
     <Compile Include="Models\MercadoPago\PaymentResponse.cs" />
     <Compile Include="Models\MercadoPago\PreferenceResponse.cs" />
     <Compile Include="Models\SuscripcionModel.cs" />
+    <Compile Include="Models\TurnoModel.cs" />
+    <Compile Include="Models\TurnoPorClienteModel.cs" />
     <Compile Include="Models\UsuarioModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AutorizarAccesoAttribute.cs" />
@@ -2335,6 +2341,11 @@
     <Content Include="Views\AbonoPorCliente\Edit.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Suscripcion\Planes.cshtml" />
+    <Content Include="Views\Turno\_TableRow.cshtml" />
+    <Content Include="Views\Turno\Edit.cshtml" />
+    <Content Include="Views\Turno\Create.cshtml" />
+    <Content Include="Views\Turno\_TurnoPorCliente.cshtml" />
+    <Content Include="Views\Turno\ConsultaTurno.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

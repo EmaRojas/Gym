@@ -1,0 +1,10 @@
+﻿@model App.Web.Models.TurnoPorClienteModel
+@using (Html.BeginForm("Turno", "Edit", FormMethod.Post, new { id = "formValidate" }))
+{
+    @Html.Hidden("Id", Model.Id)
+    <center>
+        <h2>Editar Cliente</h2>
+    </center>
+    <hr style="background-color: #5e35b1; height: 2px">
+    @Html.Partial("_TurnoPorCliente")
+}
