@@ -1,6 +1,7 @@
 ﻿using App.Core.Domain;
 using App.Services.Generals;
 using App.Web.Models;
+using App.Web.Security;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,6 +11,8 @@ using System.Web.Mvc;
 
 namespace App.Web.Controllers
 {
+    [AutorizarAcceso]
+
     public class TurnoController : BaseController
     {
         private readonly IGeneralService<Turno> _turnoService;
@@ -101,31 +104,31 @@ namespace App.Web.Controllers
             var model = new TurnoPorClienteModel();
             var lista = new List<Turno>();
 
-            //Si pongo  el nombre de otro alumno que está en la base de datos, me lo devuelve
+            if (fecha != String.Empty)
+            {
+                var fechaSearch = DateTime.ParseExact(fecha, "dd/MM/yyyy", null);
 
-            lista = _turnoService.GetByCriteriaByUser(x => x.AbonoPorCliente.FechaVencimiento >= DateTime.UtcNow.AddHours(-3) && x.Dia.ToLower() == DateTime.UtcNow.AddHours(-3).ToString("dddd", new CultureInfo("es-ES")).ToLower()).OrderBy(x => x.AbonoPorCliente.Cliente.Nombre).ToList();
+                lista = _turnoService.GetByCriteriaByUser(x => x.AbonoPorCliente.FechaVencimiento.Value.Date >= fechaSearch.Date 
+                && x.AbonoPorCliente.FechaIngreso.Value.Date <= fechaSearch.Date
+&& x.Dia.ToLower() == fechaSearch.ToString("dddd", new CultureInfo("es-ES")).ToLower())
+    .OrderBy(x => x.AbonoPorCliente.Cliente.Nombre).ToList();
+            }
+            else
+            {
+                lista = _turnoService.GetByCriteriaByUser(x => x.AbonoPorCliente.FechaVencimiento >= DateTime.UtcNow.AddHours(-3)
+&& x.Dia.ToLower() == DateTime.UtcNow.AddHours(-3).ToString("dddd", new CultureInfo("es-ES")).ToLower())
+    .OrderBy(x => x.AbonoPorCliente.Cliente.Nombre).ToList();
+            }
 
-            //if (search != string.Empty && search != null)
-            //{
-            //    lista = _turnoService.GetByCriteria(x => x.AbonoPorCliente.Cliente.Nombre.Contains(search) ||
-            //    x.AbonoPorCliente.Cliente.Apellido.Contains(search) ||
-            //    x.AbonoPorCliente.Abono.Nombre.ToString().Contains(search) ||
-            //    x.HoraInicio.Contains(search) ||
-            //    x.HoraFin.Contains(search));
-            //}
-            //else
-            //{
-            //    if (fecha != string.Empty)
-            //    {
-            //        var fechaParse = DateTime.ParseExact(fecha, "dd/MM/yyyy", null);
-            //        lista = _turnoService.GetByCriteriaByUser(x => x.AbonoPorCliente.FechaVencimiento >= DateTime.UtcNow.AddHours(-3)
-            //        && x.AbonoPorCliente.FechaVencimiento.Value.ToString("dddd", new CultureInfo("es-ES")) == x.Dia).OrderBy(x => x.AbonoPorCliente.Cliente.Nombre).ToList();
-            //    }
-            //    else
-            //    {
-            //        lista = _turnoService.GetByCriteriaByUser(x => x.AbonoPorCliente.FechaVencimiento >= DateTime.UtcNow.AddHours(-3) && x.Dia.ToLower() == DateTime.UtcNow.AddHours(-3).ToString("dddd", new CultureInfo("es-ES")).ToLower()).OrderBy(x => x.AbonoPorCliente.Cliente.Nombre).ToList();
-            //    }
-            //}
+            if (search != string.Empty && search != null)
+            {
+                var searchList = lista;
+                lista = searchList.Where(x => x.AbonoPorCliente.Cliente.Nombre.ToLower().Contains(search.ToLower()) ||
+                x.AbonoPorCliente.Cliente.Apellido.ToLower().Contains(search.ToLower()) ||
+                x.AbonoPorCliente.Abono.Nombre.ToLower().Contains(search.ToLower()) ||
+                x.HoraInicio.ToLower().Contains(search.ToLower()) ||
+                x.HoraFin.ToLower().Contains(search.ToLower())).ToList();
+            }
 
             foreach (var item in lista.Skip(offset).Take(limit))
             {
@@ -140,7 +143,7 @@ namespace App.Web.Controllers
                 });
             }
 
-            return Json(new { rows = model.ListaTurnos, total = lista.Count() }, JsonRequestBehavior.AllowGet);
+            return Json(new { rows = model.ListaTurnos.OrderBy(x=>x.HoraInicial), total = lista.Count() }, JsonRequestBehavior.AllowGet);
         }
 
 

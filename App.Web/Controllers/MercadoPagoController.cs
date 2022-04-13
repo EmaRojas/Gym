@@ -158,13 +158,13 @@ namespace App.Web.Controllers
 
             switch (pago.Monto)
             {
-                case 2500.00:
+                case 3000.00:
                     usuario.FechaVencimiento = fechaReferencia.AddMonths(1);
                     break;
-                case 14000.00:
+                case 17000.00:
                     usuario.FechaVencimiento = fechaReferencia.AddMonths(6);
                     break;
-                case 27500.00:
+                case 33000.00:
                     usuario.FechaVencimiento = fechaReferencia.AddYears(1);
                     break;
             }

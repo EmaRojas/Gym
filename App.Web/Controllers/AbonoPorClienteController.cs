@@ -67,9 +67,7 @@ namespace App.Web.Controllers
                 });
             }
 
-            model = model.OrderByDescending(x => x.FechaVencimiento).ToList();
-
-            return Json(new { rows = model, total = abonoPorClientes.Count() }, JsonRequestBehavior.AllowGet);
+            return Json(new { rows = model.OrderByDescending(x => DateTime.ParseExact(x.FechaVencimiento, "dd/MM/yyyy", null)).ToList(), total = abonoPorClientes.Count() }, JsonRequestBehavior.AllowGet);
         }
 
 

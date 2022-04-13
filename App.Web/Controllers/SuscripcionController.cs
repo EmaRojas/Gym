@@ -48,7 +48,7 @@ namespace App.Web.Controllers
             {
                 NombreCompleto = usuario.FullName,
                 FechaInicio = usuario.FechaComienzo.ToShortDateString(),
-                FechaVencimiento = usuario.FechaVencimiento.ToShortDateString(),
+                FechaVencimiento = usuario.FechaVencimiento.ToString("dd/MM/yyyy"),
             };
 
             model.Mensual = Url.Action("Mensual");
@@ -73,7 +73,7 @@ namespace App.Web.Controllers
                 Title = "Software Gimnasio",
                 Quantity = 1,
                 CurrencyId = CurrencyId.ARS,
-                UnitPrice = (float)2500.00
+                UnitPrice = (float)3000.00
             });
 
             preference.Payer = new Payer
@@ -115,7 +115,7 @@ namespace App.Web.Controllers
                 Title = "Software Gimnasio",
                 Quantity = 1,
                 CurrencyId = CurrencyId.ARS,
-                UnitPrice = (float)14000.00
+                UnitPrice = (float)17000.00
             });
 
             preference.Payer = new Payer
@@ -157,7 +157,7 @@ namespace App.Web.Controllers
                 Title = "Software Gimnasio",
                 Quantity = 1,
                 CurrencyId = CurrencyId.ARS,
-                UnitPrice = (float)27500.00
+                UnitPrice = (float)33000.00
             });
 
             preference.Payer = new Payer

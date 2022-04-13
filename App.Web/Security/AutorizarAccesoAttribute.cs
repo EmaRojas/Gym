@@ -14,7 +14,7 @@ namespace App.Web.Security
             if(UserData.ExpirationDate == String.Empty)
                 return false;
 
-            var fechaVencimiento = DateTime.Parse(UserData.ExpirationDate);
+            var fechaVencimiento = DateTime.ParseExact(UserData.ExpirationDate, "dd/MM/yyyy", null);
 
             return fechaVencimiento.Date >= DateTime.UtcNow.AddHours(-3).Date;
         }
